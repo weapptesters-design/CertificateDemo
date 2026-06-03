@@ -18,5 +18,15 @@
     "id": "WAT-02EA-2026",
     "prefix": "2026",
     "suffix": ""
+  },
+  "com.storyrilssaver27": {
+    "key": "com.storyrilssaver27",
+    "appName": "app 23",
+    "packageName": "com.storyrilssaver27",
+    "version": "1",
+    "startDate": "01 June 2026",
+    "id": "WAT-03EA-2026",
+    "prefix": "2026",
+    "suffix": ""
   }
 }
