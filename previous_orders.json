@@ -1,14 +1,1 @@
-{
-  "WAT-01EA-2026": {
-    "appName": "Test",
-    "packageName": "com.maheshgnayak.reelorganizer",
-    "version": "2.6",
-    "startDate": "05 June 2026"
-  },
-  "WAT-02EA-2026": {
-    "appName": "Ap namwee",
-    "packageName": "com.storyrilssaver",
-    "version": "1.2",
-    "startDate": "01 June 2026"
-  }
-}
+{}
