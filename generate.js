@@ -2,7 +2,7 @@ const fs = require("fs");
 const axios = require("axios");
 
 async function run() {
-  const csvUrl = "YOUR_GOOGLE_SHEET_CSV_LINK";
+  const csvUrl = "https://docs.google.com/spreadsheets/d/1n_ZkaKkAhMVxdWyO5S_pGkJpAN9gLZwNPsBSOcSlQn8/export?format=csv";
 
   const res = await axios.get(csvUrl);
   const rows = res.data.split("\n").slice(1);
