@@ -2,7 +2,7 @@ name: Certificate Automation
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 0 * * *"   # every 24 hours (midnight UTC)
   workflow_dispatch:
 
 jobs:
@@ -10,14 +10,56 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      # 1. Checkout repo
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      # 2. Setup Node
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - run: npm install
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm install puppeteer node-fetch form-data
 
-      - run: node generate.js
+      # 4. Download Google Sheet CSV
+      - name: Download CSV
+        run: |
+          curl -L "https://docs.google.com/spreadsheets/d/1n_ZkaKkAhMVxdWyO5S_pGkJpAN9gLZwNPsBSOcSlQn8/export?format=csv" -o orders.csv
 
-      - run: cat data.json
+      # 5. Ensure previous state file exists
+      - name: Init state file
+        run: |
+          if [ ! -f previous_orders.json ]; then
+            echo "{}" > previous_orders.json
+          fi
+
+      # 6. Generate report (detect new/changed apps)
+      - name: Generate Data
+        run: node generate.js
+
+      # 7. Create HTML certificate
+      - name: Create Certificate HTML
+        run: node create-cert.js
+
+      # 8. Generate PDF
+      - name: Generate PDF
+        run: node pdf.js
+
+      # 9. Send to Telegram (smart logic inside JS)
+      - name: Send Telegram Notification
+        run: node send-telegram.js
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+      # 10. Commit updated state
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Auto certificate update" || exit 0
+          git push
