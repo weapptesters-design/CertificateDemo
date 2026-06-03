@@ -99,16 +99,26 @@ function parseCSV(raw) {
 // ─── DOWNLOADER ───────────────────────────────────────────────────────────────
 function downloadCSV(url) {
   return new Promise((resolve, reject) => {
-    const protocol = url.startsWith('https') ? https : http;
     let redirects = 0;
 
     function get(targetUrl) {
-      protocol.get(targetUrl, (res) => {
-        // Handle redirects
-        if ((res.statusCode === 301 || res.statusCode === 302) && redirects < 5) {
+      // Pick correct protocol for EACH request (redirects can switch http↔https)
+      const proto = targetUrl.startsWith('https') ? https : http;
+      console.log(`[HTTP] GET ${targetUrl.substring(0, 80)}...`);
+
+      proto.get(targetUrl, (res) => {
+        // Follow all redirect codes: 301, 302, 303, 307, 308
+        if ([301, 302, 303, 307, 308].includes(res.statusCode)) {
+          if (redirects >= 10) return reject(new Error('Too many redirects'));
           redirects++;
-          console.log(`[HTTP] Redirect → ${res.headers.location}`);
-          get(res.headers.location);
+          // Drain response body to free socket
+          res.resume();
+          const location = res.headers.location;
+          if (!location) return reject(new Error('Redirect with no Location header'));
+          // Handle relative redirects
+          const nextUrl = location.startsWith('http') ? location : new URL(location, targetUrl).href;
+          console.log(`[HTTP] Redirect ${res.statusCode} → ${nextUrl.substring(0, 80)}...`);
+          get(nextUrl);
           return;
         }
         if (res.statusCode !== 200) {
