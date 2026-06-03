@@ -1,8 +1,6 @@
 const puppeteer = require("puppeteer");
-const fs = require("fs");
 
 async function generatePDF(html, fileName) {
-
   const browser = await puppeteer.launch({
     headless: "new",
     args: ["--no-sandbox", "--disable-setuid-sandbox"]
@@ -10,7 +8,9 @@ async function generatePDF(html, fileName) {
 
   const page = await browser.newPage();
 
-  await page.setContent(html, { waitUntil: "networkidle0" });
+  await page.setContent(html, {
+    waitUntil: "networkidle0"
+  });
 
   await page.pdf({
     path: fileName,
