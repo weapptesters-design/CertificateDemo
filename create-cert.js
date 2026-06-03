@@ -267,8 +267,9 @@ async function main() {
   if (!fs.existsSync(REPORT_FILE)) { console.error('[ERROR] report.json not found'); process.exit(1); }
 
   const report     = JSON.parse(fs.readFileSync(REPORT_FILE, 'utf8'));
-  const { newApps, changedApps, date } = report;
-  const reportDate = new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+  const newApps = report.newApps || [];
+  const changedApps = report.changedApps || [];
+  const reportDate = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
 
   console.log(`[REPORT] New: ${newApps.length} | Changed: ${changedApps.length}`);
 
