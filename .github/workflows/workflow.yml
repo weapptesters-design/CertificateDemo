@@ -1,0 +1,89 @@
+name: WAT Certificate Automation
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  generate-and-send:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Puppeteer system dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y \
+            libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 \
+            libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 \
+            libxrandr2 libgbm1 libpango-1.0-0 libcairo2 libasound2t64 \
+            libdrm2 libxext6 libx11-6 libxcb1 fonts-liberation
+
+      - name: Install Puppeteer
+        run: npm install puppeteer
+
+      - name: Create output directory
+        run: mkdir -p output
+
+      - name: Restore state cache
+        uses: actions/cache@v4
+        with:
+          path: output/previous_orders.json
+          key: wat-state-${{ github.ref_name }}
+          restore-keys: wat-state-
+
+      - name: Process CSV & Detect Changes
+        env:
+          SHEETS_CSV_URL: ${{ secrets.SHEETS_CSV_URL }}
+        run: |
+          echo "=== Running generate.js ==="
+          node generate.js
+          echo "--- report.json ---"
+          cat output/report.json
+
+      - name: Generate PDF Certificates & Send to Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          echo "=== Running create-cert.js ==="
+          node create-cert.js
+
+      - name: Save state cache
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: output/previous_orders.json
+          key: wat-state-${{ github.ref_name }}-${{ github.run_id }}
+
+      - name: Commit state to repo
+        if: always()
+        run: |
+          git config user.name  "WAT Bot"
+          git config user.email "bot@weapptesters.com"
+          git add output/previous_orders.json output/report.json || true
+          git diff --staged --quiet || git commit -m "chore: update state [skip ci]"
+          git push || echo "Nothing to push"
+
+      - name: Upload artifacts for debugging
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wat-run-${{ github.run_id }}
+          path: |
+            output/report.json
+            output/previous_orders.json
+            output/*.pdf
+          retention-days: 7
