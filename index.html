@@ -870,31 +870,29 @@
 
 <script>
 window.addEventListener("DOMContentLoaded", function () {
-
   const assets = window.APP_ASSETS;
 
   const logo = document.getElementById("cert-logo-img");
   if (logo && assets?.logo) {
-    logo.src = `data:image/png;base64,${assets.logo}`;
+    logo.src = assets.logo;
   }
 
   const seal = document.getElementById("verified-badge");
   if (seal && assets?.seal) {
-    seal.src = `data:image/png;base64,${assets.seal}`;
+    seal.src = assets.seal;
   }
-const loginLogo = document.getElementById("login-logo");
+
+  const loginLogo = document.getElementById("login-logo");
   if (loginLogo && assets?.logo) {
-    loginLogo.src = `data:image/png;base64,${assets.logo}`;
+    loginLogo.src = assets.logo;
   }
-const headerLogo = document.getElementById("header-logo");
 
-if (headerLogo && assets?.logo) {
-  headerLogo.src = `data:image/png;base64,${assets.logo}`;
-}
-
+  const headerLogo = document.getElementById("header-logo");
+  if (headerLogo && assets?.logo) {
+    headerLogo.src = assets.logo;
+  }
 });
 </script>
-
 </body>
 
 </html>
