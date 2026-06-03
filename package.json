@@ -1,0 +1,8 @@
+{
+  "name": "certificate-automation",
+  "version": "1.0.0",
+  "main": "generate.js",
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}
