@@ -1,4 +1,4 @@
 window.APP_ASSETS = {
-  logo: "https://i.ibb.co/WN9Ss3Jv/IMG-20260601-161037-448.jpg",
+  logo: "https://i.ibb.co/QjdSXR0X/1000184910.png",
   seal: "https://example.com/path/to/your/seal.png"
 };
