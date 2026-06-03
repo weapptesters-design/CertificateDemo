@@ -1,43 +1,45 @@
-const fs = require("fs");
-const generatePDF = require("./pdf");
-const sendTelegram = require("./send-telegram");
-
+const fetch = require("node-fetch"); // important in Node 20 workflows
 const report = require("./report.json");
 
-async function run() {
+const newApps = report.newApps || [];
 
-  const newApps = report.newApps;
+async function sendNoAppMessage() {
 
-  if (newApps.length === 0) {
-    console.log("⚠️ No new apps today");
-    return;
-  }
+  const message = `
+🚀 Certificate Report
+📅 Date: ${new Date().toLocaleDateString()}
 
-  for (let app of newApps) {
+❌ No new apps today
+All systems are up to date.
+  `;
 
-    console.log("Processing:", app.appName);
+  try {
+    const res = await fetch(
+      `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: process.env.TELEGRAM_CHAT_ID,
+          text: message
+        })
+      }
+    );
 
-    // 1. load HTML template
-    let html = fs.readFileSync("index.html", "utf8");
+    const data = await res.json();
+    console.log("📢 Telegram response:", data);
 
-    // 2. replace values
-    html = html
-      .replace(/id="r-app">.*?</, `id="r-app">${app.appName}<`)
-      .replace(/id="r-pkg">.*?</, `id="r-pkg">${app.packageName}<`)
-      .replace(/id="r-ver">.*?</, `id="r-ver">${app.version || "—"}<`)
-      .replace(/id="r-ref">.*?</, `id="r-ref">${app.id}<`)
-      .replace(/id="r-per">.*?</, `id="r-per">${app.startDate}<`);
-
-    const fileName = `cert_${app.id}.pdf`;
-
-    // 3. create PDF
-    await generatePDF(html, fileName);
-
-    // 4. send to telegram
-    await sendTelegram(fileName, app.appName);
-
-    console.log("Done:", app.appName);
+  } catch (err) {
+    console.log("❌ Telegram error:", err.message);
   }
 }
 
-run();
+(async () => {
+
+  if (newApps.length === 0) {
+    await sendNoAppMessage();
+    console.log("📢 No new app notification sent");
+    return; // better than process.exit
+  }
+
+})();
