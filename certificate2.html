@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>We App Testers – Certificate Generator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+    :root {
+      --green-dark: #1B5E20;
+      --green-med: #2E7D32;
+      --green-light: #4CAF50;
+      --gold: #C9A84C;
+      --gold-light: #F0D080;
+      --cream: #FAFAF2;
+      --bg: #0F1F10;
+      --card: #162318;
+      --border: #2a3d2b;
+      --text: #e8f5e9;
+      --muted: #7fa882;
+      --navy: #1a1464;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0 0 40px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1a1464 0%, #0a0a2e 100%);
+      border-bottom: 2px solid var(--gold);
+      padding: 16px 20px 14px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201, 168, 76, 0.12) 0%, transparent 70%);
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .logo-row img {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+    }
+
+    .brand-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 1px;
+      text-align: left;
+    }
+
+    .brand-name span {
+      color: #4CAF50;
+    }
+
+    .brand-sub {
+      font-size: 10px;
+      color: var(--gold-light);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 5px;
+      position: relative;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin: 18px 16px 0;
+      padding: 20px 18px;
+    }
+
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      background: #0F1F10;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      padding: 11px 13px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      background: #0F1F10;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .input-group:focus-within {
+      border-color: var(--green-light);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+    }
+
+    .input-group .prefix,
+    .input-group .suffix {
+      padding: 11px 13px;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.05);
+      user-select: none;
+    }
+
+    .input-group input {
+      border: none !important;
+      border-radius: 0 !important;
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+      flex: 1;
+      width: 100%;
+      background: transparent !important;
+    }
+
+    .input-group input:focus {
+      box-shadow: none !important;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--green-light);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+    }
+
+    input::placeholder {
+      color: #3a5c3b;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn-generate {
+      width: 100%;
+      background: linear-gradient(135deg, #1a1464, #2e2090);
+      border: 1.5px solid var(--gold);
+      border-radius: 12px;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 15px;
+      cursor: pointer;
+      margin-top: 8px;
+      box-shadow: 0 4px 20px rgba(26, 20, 100, 0.5);
+      transition: transform 0.15s;
+    }
+
+    .btn-generate:active {
+      transform: scale(0.98);
+    }
+
+    #preview-section {
+      display: none;
+      margin: 18px 16px 0;
+    }
+
+    #preview-section.show {
+      display: block;
+      padding-bottom: 20px;
+    }
+
+    .preview-box {
+      background: var(--card);
+      border: 1px solid var(--gold);
+      border-radius: 16px;
+      padding: 0;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .preview-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .btn-download {
+      width: 100%;
+      background: linear-gradient(135deg, var(--gold), #a07820);
+      border: none;
+      border-radius: 12px;
+      color: #1a1000;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4);
+      transition: transform 0.15s;
+      margin-bottom: 10px;
+    }
+
+    .btn-download:active {
+      transform: scale(0.98);
+    }
+
+    .btn-new {
+      width: 100%;
+      background: transparent;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      padding: 12px;
+      cursor: pointer;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #2E7D32;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      transition: transform 0.35s cubic-bezier(.34, 1.56, .64, 1);
+      white-space: nowrap;
+      z-index: 999;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Modern CSS Certificate Template */
+    .cert-row {
+      display: flex;
+      border-bottom: 1px solid #dcdcdc;
+      padding: 7px 15px;
+    }
+
+    .cert-row:last-child {
+      border-bottom: none;
+    }
+
+    .cert-label {
+      width: 35%;
+      font-weight: bold;
+      color: #1a1a1a;
+      font-size: 13.5px;
+      text-align: left;
+    }
+
+    .cert-value {
+      width: 65%;
+      color: #444;
+      font-size: 13.5px;
+      word-break: break-word;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Login Screen -->
+  <div id="login-section"
+    style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #e8f5e9; position: fixed; inset: 0; z-index: 1000;">
+    <div
+      style="background: #ffffff; border: 1px solid #c8e6c9; border-radius: 16px; padding: 40px 30px; text-align: center; width: 90%; max-width: 360px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+    
+      <img id="login-logo" alt="Logo" style="width: 80px; margin-bottom: 20px;">
+      <h2
+        style="font-family: 'Montserrat', sans-serif; color: #2e7d32; font-size: 20px; margin-bottom: 24px; letter-spacing: 0.5px; font-weight: 700;">
+        Admin Authentication</h2>
+      <input type="password" id="admin-pass" placeholder="Enter Password"
+        style="width: 100%; box-sizing: border-box; background: #f1f8e9; border: 1px solid #aed581; border-radius: 8px; color: #333; padding: 12px 15px; margin-bottom: 15px; text-align: center; font-size: 16px; font-family: 'Montserrat', sans-serif; outline: none; transition: border-color 0.3s; ">
+      <p id="login-error"
+        style="color: #d32f2f; font-size: 13px; margin-bottom: 15px; display: none; font-family: 'Montserrat', sans-serif; font-weight: 500;">
+        Incorrect password</p>
+      <button onclick="checkPassword()"
+        style="width: 100%; box-sizing: border-box; background: linear-gradient(135deg, #388E3C, #1B5E20); border: none; border-radius: 8px; color: #ffffff; font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 700; padding: 14px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">LOGIN</button>
+    </div>
+  </div>
+
+  <div id="app-content" style="display: none;">
+
+
+    <header>
+      <div class="logo-row">
+        <img id="header-logo" alt="Logo">
+        <div>
+          <div class="brand-name">WE <span>APP</span> TESTERS</div>
+          <div class="brand-sub">Certificate Generator</div>
+        </div>
+      </div>
+    </header>
+
+    <div id="form-section">
+      <div class="card">
+        <div class="card-title">📝 Application Details</div>
+        <div class="field">
+          <label>App Name</label>
+          <input type="text" id="app_name" placeholder="Enter full app name">
+        </div>
+        <div class="field">
+          <label>Package Name</label>
+          <input type="text" id="package_name" placeholder="com.example.app">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Version</label>
+            <input type="text" id="version" placeholder="e.g. 1.0.0">
+          </div>
+          <div class="field">
+            <label>No. of Testers</label>
+            <input type="number" id="num_testers" placeholder="12" value="12">
+          </div>
+        </div>
+        <div class="field">
+          <label>Testing Type</label>
+          <select id="testing_type">
+            <option value="Closed Testing">Closed Testing</option>
+            <option value="Open Testing">Open Testing</option>
+            <option value="Internal Testing">Internal Testing</option>
+            <option value="Beta Testing">Beta Testing</option>
+            <option value="Functional Testing">Functional Testing</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📅 Testing Period & Info</div>
+        <div class="field-row">
+          <div class="field">
+            <label>Start Date</label>
+            <input type="date" id="period_start" onchange="autoEndDate()">
+          </div>
+          <div class="field">
+            <label>End Date</label>
+            <input type="date" id="period_end">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Issue Date</label>
+            <input type="date" id="issue_date">
+          </div>
+          <div class="field">
+            <label>Ref. Number</label>
+            <div
+              style="display: flex; align-items: center; background: #0F1F10; border: 1.5px solid var(--border); border-radius: 10px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; overflow: hidden;">
+              <input type="text" id="ref_prefix" value="WAT" oninput="updateRefPreview()"
+                style="width: 55px; text-align: center; color: var(--gold); font-weight: 700; background: transparent; border: none; outline: none; padding: 11px 0;">
+              <span style="color: var(--gold); font-weight: 700; user-select: none;">-</span>
+              <input type="text" id="ref_id" placeholder="XXXXX" oninput="updateRefPreview()"
+                style="flex: 1; min-width: 0; background: transparent; border: none; padding: 11px 5px; color: inherit; font-size: inherit; outline: none;">
+              <span style="color: var(--gold); font-weight: 700; user-select: none;">-</span>
+              <input type="text" id="ref_year" oninput="updateRefPreview()"
+                style="width: 65px; text-align: center; color: var(--gold); font-weight: 700; background: transparent; border: none; outline: none; padding: 11px 0;">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin: 18px 16px 0;">
+        <button class="btn-generate" onclick="generatePreview()">⚡ GENERATE CERTIFICATE</button>
+      </div>
+    </div>
+
+    <div id="preview-section">
+      <div class="preview-box">
+
+        <div
+          style="background: #1B5E20; padding: 12px; font-weight: bold; color: #FAFAF2; font-family: 'Montserrat', sans-serif; letter-spacing: 1px; border-bottom: 2px solid #C9A84C;">
+          ✅ CERTIFICATE PREVIEW</div>
+
+        <!-- PDF Container -->
+        <div
+          style="width: 100%; overflow: hidden; display: flex; justify-content: flex-start; align-items: flex-start; padding: 0;">
+          <div id="pdf-container"
+            style="width: 1123px; height: 794px; background: #FAFAF2; position: relative; box-sizing: border-box; font-family: 'DM Sans', sans-serif; transform-origin: top left; flex-shrink: 0;">
+            <div style="position: absolute; inset: 0; background: #1B5E20;">
+              <div
+                style="position: absolute; inset: 18px; border: 4px solid #C9A84C; border-radius: 12px; pointer-events: none;">
+              </div>
+              <div
+                style="position: absolute; inset: 26px; border: 1.5px solid #C9A84C; border-radius: 8px; pointer-events: none;">
+              </div>
+              <div
+                style="position: absolute; inset: 36px; background: #FAFAF2; border-radius: 6px; box-sizing: border-box; padding: 30px 40px; display: flex; flex-direction: column;">
+
+                <!-- Header -->
+                <div
+                  style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-shrink: 0;">
+                  <div style="display: flex; align-items: center; gap: 15px;">
+                    <img
+                      id="cert-logo-img" style="width: 70px; height: 70px; object-fit: contain;">
+                    <div>
+                      <div
+                        style="font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 800; color: #1a1464; letter-spacing: 1px; text-align: left;">
+                        WE <span style="color: #4CAF50;">APP</span> TESTERS</div>
+                      <div style="font-size: 14px; color: #707070; text-align: left; font-weight: 600;">Android Testing
+                        Experts</div>
+                    </div>
+                  </div>
+                  <div style="text-align: right; color: #333; font-size: 14px; margin-top: 5px;">
+                    <div style="font-weight: 600; margin-bottom: 3px;">Testing Reference: <span id="r-ref"></span></div>
+                    <div style="font-weight: 600;">Issue Date: <span id="r-issue"></span></div>
+                  </div>
+                </div>
+
+                <div style="height: 1.5px; background: #dcdcdc; margin-bottom: 12px; flex-shrink: 0;"></div>
+
+                <!-- Title -->
+                <div style="text-align: center; margin-bottom: 12px; flex-shrink: 0;">
+                  <div
+                    style="font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 800; color: #1a1a1a;">
+                    APP TESTING COMPLETION CERTIFICATE</div>
+                  <div style="font-size: 14px; color: #666; font-weight: 600; letter-spacing: 1px; margin-top: 4px;">
+                    CERTIFICATE OF TESTING</div>
+                  <div style="width: 100px; height: 3px; background: #C9A84C; margin: 10px auto 0;"></div>
+                </div>
+
+                <p
+                  style="font-size: 13px; color: #444; line-height: 1.5; margin-bottom: 12px; text-align: justify; flex-shrink: 0;">
+                  This is to certify that the Android application listed below has successfully completed a structured
+                  testing process conducted by We App Testers.
+                </p>
+
+                <!-- Fields Grid -->
+                <div
+                  style="width: 100%; border: 1px solid #dcdcdc; border-radius: 8px; overflow: hidden; margin-bottom: 15px; flex-shrink: 0;">
+                  <div class="cert-row" style="background: #E8F0E6;">
+                    <div class="cert-label">App Name:</div>
+                    <div class="cert-value" id="r-app" style="font-weight: bold; color: #1a1a1a;"></div>
+                  </div>
+                  <div class="cert-row" style="background: #F5F8F4;">
+                    <div class="cert-label">Package Name:</div>
+                    <div class="cert-value" id="r-pkg"></div>
+                  </div>
+                  <div class="cert-row" style="background: #E8F0E6;">
+                    <div class="cert-label">Version Tested:</div>
+                    <div class="cert-value" id="r-ver"></div>
+                  </div>
+                  <div class="cert-row" style="background: #F5F8F4;">
+                    <div class="cert-label">Testing Type:</div>
+                    <div class="cert-value" style="font-style: italic; font-weight: 600;" id="r-type"></div>
+                  </div>
+                  <div class="cert-row" style="background: #E8F0E6;">
+                    <div class="cert-label">Number of Testers:</div>
+                    <div class="cert-value" id="r-test"></div>
+                  </div>
+                  <div class="cert-row" style="background: #F5F8F4;">
+                    <div class="cert-label">Testing Period:</div>
+                    <div class="cert-value" id="r-per"></div>
+                  </div>
+                </div>
+
+                <!-- Description -->
+                <p
+                  style="font-size: 13.5px; color: #555; line-height: 1.5; text-align: justify; margin-bottom: 0; flex-shrink: 0;">
+                  During the testing period, the application was installed and used by multiple testers across different
+                  Android devices. Testers evaluated installation flow, basic functionality, usability, and overall app
+                  performance while providing feedback during the testing period.
+                </p>
+
+                <!-- Flexible Space to push footer to very bottom -->
+                <div style="flex-grow: 1; min-height: 15px;"></div>
+
+                <!-- Footer Wrapper -->
+                <div
+                  style="position: relative; width: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 5px; flex-shrink: 0;">
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-end; padding-right: 170px;">
+                    <!-- Left: Issued By -->
+                    <div style="text-align: left; display: flex; flex-direction: column; gap: 3px;">
+                      <div
+                        style="font-weight: 800; font-size: 14.5px; color: #333; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Issued By:</div>
+                      <div
+                        style="font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 22px; color: #1a1464; letter-spacing: 1px; line-height: 1.1; text-transform: uppercase;">
+                        WE <span style="color: #4CAF50;">APP</span> TESTERS</div>
+                      <div
+                        style="font-size: 13px; color: #666; font-weight: 600; display: flex; align-items: center; gap: 5px;">
+                        <div style="width: 6px; height: 6px; border-radius: 50%; background: #4caf50;"></div>
+                        Android App Testing Service
+                      </div>
+                      <div
+                        style="font-size: 14.5px; color: #444; font-weight: 600; margin-top: 6px; display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 13px; opacity: 0.9;">📞</span> +91 91220 61839
+                      </div>
+                      <div
+                        style="font-size: 14.5px; color: #1565c0; font-weight: 700; margin-top: 3px; display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 13px; opacity: 0.9;">🌐</span> WeAppTesters.com
+                      </div>
+                    </div>
+                    <!-- Center: Signature -->
+                    <div style="text-align: center;">
+                      <div
+                        style="font-family: 'Caveat', cursive; font-weight: 700; font-size: 38px; color: #1a1464; margin-bottom: -10px; line-height: 1; padding-bottom: 5px;">
+                        Kumkum Rani</div>
+                      <div
+                        style="width: 180px; height: 1.5px; background: #666; margin-bottom: 6px; margin-left: auto; margin-right: auto;">
+                      </div>
+                      <div
+                        style="font-size: 13px; color: #1a1a1a; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+                        Testing Manager</div>
+                    </div>
+                  </div>
+
+                  <!-- Absolutely positioned Seal relative to the Footer wrapper, guaranteed to not overlap left/center area due to padding-right -->
+                  <img id="verified-badge"
+                    alt="Verified Badge"
+                    style="position: absolute; bottom: 8px; right: 0px; width: 140px; height: 140px; object-fit: contain; z-index: 10;">
+                </div>
+
+                <div
+                  style="margin-top: 16px; font-size: 13.5px; color: #444; text-align: left; line-height: 1.6; border-top: 1px solid #e0e0e0; padding-top: 14px; flex-shrink: 0; display: flex; align-items: flex-start; gap: 8px; background: rgba(0,0,0,0.02); padding: 14px 16px; border-radius: 6px; box-sizing: border-box;">
+                  <div style="font-weight: 800; font-size: 14px; color: #1a1464; letter-spacing: 0.5px;">DISCLAIMER:
+                  </div>
+                  <div style="flex: 1;">
+                    This certificate confirms ONLY that the specified application version was tested during the stated
+                    period by <strong>We App Testers</strong>. Any subsequent updates, modifications, or newly released
+                    versions fall outside the scope of this evaluation.
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="padding: 10px 16px 20px;">
+        <button class="btn-download" onclick="downloadImage()"
+          style="background: linear-gradient(135deg, #388E3C, #1B5E20); margin-right: 10px;">🖼️ DOWNLOAD IMAGE</button>
+        <button class="btn-download" onclick="downloadPDF()">⬇️ DOWNLOAD PDF</button>
+        <button class="btn-new" onclick="newCertificate()">+ NEW CERTIFICATE</button>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">✅ Action Successful!</div>
+
+    <script>
+      function formatDate(val) {
+        if (!val) return '';
+        const d = new Date(val + 'T00:00:00');
+        return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+      }
+
+      function autoEndDate() {
+        const startVal = document.getElementById('period_start').value;
+        if (!startVal) return;
+        const start = new Date(startVal + 'T00:00:00');
+        let end = new Date(start);
+        end.setDate(start.getDate() + 14);
+        const y = end.getFullYear();
+        const m = String(end.getMonth() + 1).padStart(2, '0');
+        const d = String(end.getDate()).padStart(2, '0');
+        document.getElementById('period_end').value = `${y}-${m}-${d}`;
+        // Auto-update ref_year to match start date year
+        document.getElementById('ref_year').value = start.getFullYear();
+        updateRefPreview();
+      }
+
+      window.onload = () => {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('issue_date').value = today;
+
+        // Initialize Reference Number parts
+        const currentYear = new Date().getFullYear();
+        document.getElementById('ref_year').value = currentYear;
+        document.getElementById('ref_prefix').value = 'WAT';
+        // ref_id starts empty
+        document.getElementById('ref_id').addEventListener('input', function () {
+          this.value = this.value.toUpperCase();
+        });
+
+        // Auto-update ref_year when issue_date changes
+        document.getElementById('issue_date').addEventListener('change', () => {
+          const val = document.getElementById('issue_date').value;
+          if (val) {
+            document.getElementById('ref_year').value = new Date(val + 'T00:00:00').getFullYear();
+            updateRefPreview();
+          }
+        });
+      };
+
+      function getData() {
+        const refPre = document.getElementById('ref_prefix').value.trim();
+        const refId = document.getElementById('ref_id').value.trim().toUpperCase();
+        const refYear = document.getElementById('ref_year').value.trim();
+        const combinedRef = refPre + '-' + refId + '-' + refYear;
+        return {
+          app_name: document.getElementById('app_name').value.trim(),
+          package_name: document.getElementById('package_name').value.trim(),
+          version: document.getElementById('version').value.trim(),
+          num_testers: document.getElementById('num_testers').value.trim() + '+ Testers',
+          testing_type: document.getElementById('testing_type').value,
+          period_start: formatDate(document.getElementById('period_start').value),
+          period_end: formatDate(document.getElementById('period_end').value),
+          issue_date: formatDate(document.getElementById('issue_date').value),
+          ref_number: combinedRef,
+        };
+      }
+
+      function resizePreview() {
+        const container = document.getElementById('pdf-container');
+        const parent = container.parentElement;
+        if (!container || !parent) return;
+
+        // Calculate scale based on parent width constraint
+        const targetWidth = parent.clientWidth;
+        if (targetWidth <= 0) return;
+
+        const scale = Math.min(1, targetWidth / 1123);
+        container.style.transform = `scale(${scale})`;
+        container.style.transformOrigin = 'top left';
+        // Center with integer margin to avoid sub-pixel artifacts
+        const scaledWidth = 1123 * scale;
+        const marginLeft = Math.round((targetWidth - scaledWidth) / 2);
+        container.style.marginLeft = `${marginLeft}px`;
+        parent.style.height = `${Math.round(794 * scale) + 20}px`;
+      }
+
+      window.addEventListener('resize', () => {
+        if (document.getElementById('preview-section').classList.contains('show')) {
+          resizePreview();
+        }
+      });
+
+      function generatePreview() {
+        const d = getData();
+        if (!d.app_name) { alert('Please enter App Name'); return; }
+        if (!d.package_name) { alert('Please enter Package Name'); return; }
+        if (!d.period_start || !d.period_end) { alert('Please select Testing Period dates'); return; }
+
+        document.getElementById('r-app').innerText = d.app_name;
+        document.getElementById('r-pkg').innerText = d.package_name;
+        document.getElementById('r-ver').innerText = d.version || '—';
+        document.getElementById('r-type').innerText = d.testing_type;
+        document.getElementById('r-test').innerText = d.num_testers;
+        document.getElementById('r-per').innerText = d.period_start + ' – ' + d.period_end;
+        document.getElementById('r-ref').innerText = d.ref_number;
+        document.getElementById('r-issue').innerText = d.issue_date;
+
+        document.getElementById('form-section').style.display = 'none';
+        document.getElementById('preview-section').classList.add('show');
+
+        setTimeout(() => {
+          resizePreview();
+          window.scrollTo({ top: document.getElementById('preview-section').offsetTop - 20, behavior: 'smooth' });
+        }, 10);
+      }
+
+      function newCertificate() {
+        document.getElementById('form-section').style.display = 'block';
+        document.getElementById('preview-section').classList.remove('show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      async function downloadPDF() {
+        const d = getData();
+        const t = document.getElementById('toast');
+        t.innerText = "⏳ Generating PDF... Please wait.";
+        t.classList.add('show');
+
+        const container = document.getElementById('pdf-container');
+        const prevTransform = container.style.transform;
+        container.style.transform = 'none'; // reset scale for accurate rendering
+
+        // Force absolute dimensions temporarily to ensure html2canvas captures correctly without clipping
+        const parent = container.parentElement;
+        const prevH = parent.style.height;
+        parent.style.height = '850px';
+
+        try {
+        const container = document.getElementById('pdf-container');
+        await document.fonts.ready;
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        const canvas = await html2canvas(container, {
+                scale: 2, // High resolution for PDF
+            useCORS: true,
+            backgroundColor: '#1B5E20',
+            width: 1123,
+            height: 794,
+            scrollX: 0,
+            scrollY: -window.scrollY,
+            windowWidth: 1123,
+            windowHeight: 794
+          });
+
+          // Restore styling
+          container.style.transform = prevTransform;
+          parent.style.height = prevH;
+
+          const imgData = canvas.toDataURL('image/jpeg', 0.98);
+          const doc = new window.jspdf.jsPDF({
+            orientation: 'landscape',
+            unit: 'mm',
+            format: 'a4'
+          });
+
+          doc.addImage(imgData, 'JPEG', 0, 0, 297, 210);
+          const filename = d.ref_number.replace(/\s+/g, '_') + '_Certificate_' + d.app_name.replace(/\s+/g, '_') + '.pdf';
+          doc.save(filename);
+
+          t.innerText = '✅ PDF Downloaded!';
+          setTimeout(() => t.classList.remove('show'), 3000);
+        } catch (e) {
+          console.error(e);
+          container.style.transform = prevTransform;
+          parent.style.height = prevH;
+          t.innerText = '❌ Error generating PDF.';
+          setTimeout(() => t.classList.remove('show'), 3000);
+        }
+      }
+
+      async function downloadImage() {
+        const d = getData();
+        const t = document.getElementById('toast');
+        t.innerText = "⏳ Generating Image... Please wait.";
+        t.classList.add('show');
+
+        const container = document.getElementById('pdf-container');
+        const prevTransform = container.style.transform;
+        container.style.transform = 'none';
+
+        const parent = container.parentElement;
+        const prevH = parent.style.height;
+        parent.style.height = '850px';
+
+        try {
+          const canvas = await html2canvas(container, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#1B5E20',
+            width: 1123,
+            height: 794,
+            scrollX: 0,
+            scrollY: -window.scrollY,
+            windowWidth: 1123,
+            windowHeight: 794
+          });
+
+          container.style.transform = prevTransform;
+          parent.style.height = prevH;
+
+          const imgData = canvas.toDataURL('image/png');
+          const filename = d.ref_number.replace(/\s+/g, '_') + '_Certificate_' + d.app_name.replace(/\s+/g, '_') + '.png';
+          const link = document.createElement('a');
+          link.href = imgData;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          t.innerText = '✅ Image Downloaded!';
+          setTimeout(() => t.classList.remove('show'), 3000);
+        } catch (e) {
+          console.error(e);
+          container.style.transform = prevTransform;
+          parent.style.height = prevH;
+          t.innerText = '❌ Error generating Image.';
+          setTimeout(() => t.classList.remove('show'), 3000);
+        }
+      }
+    </script>
+
+    <script>
+      function checkPassword() {
+        const pass = document.getElementById('admin-pass').value;
+        if (pass === 'Aadi') {
+          document.getElementById('login-section').style.display = 'none';
+          document.getElementById('app-content').style.display = 'block';
+        } else {
+          document.getElementById('login-error').style.display = 'block';
+        }
+      }
+
+      document.getElementById('admin-pass').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          checkPassword();
+        }
+      });
+    </script>
+</div>
+
+ <script src="assets.js"></script>
+
+<script>
+window.addEventListener("DOMContentLoaded", function () {
+
+  const assets = window.APP_ASSETS;
+
+  const logo = document.getElementById("cert-logo-img");
+  if (logo && assets?.logo) {
+    logo.src = `data:image/png;base64,${assets.logo}`;
+  }
+
+  const seal = document.getElementById("verified-badge");
+  if (seal && assets?.seal) {
+    seal.src = `data:image/png;base64,${assets.seal}`;
+  }
+const loginLogo = document.getElementById("login-logo");
+  if (loginLogo && assets?.logo) {
+    loginLogo.src = `data:image/png;base64,${assets.logo}`;
+  }
+const headerLogo = document.getElementById("header-logo");
+
+if (headerLogo && assets?.logo) {
+  headerLogo.src = `data:image/png;base64,${assets.logo}`;
+}
+
+});
+</script>
+
+</body>
+
+</html>
