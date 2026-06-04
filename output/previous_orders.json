@@ -126,5 +126,29 @@
     "version": "1.2",
     "startDate": "04 September 2026",
     "id": "WAT-04RX-2026"
+  },
+  "com.rishy.app3": {
+    "key": "com.rishy.app3",
+    "appName": "fff1",
+    "packageName": "com.rishy.app3",
+    "version": "1",
+    "startDate": "01 October 2026",
+    "id": "WAT-01FF-2026"
+  },
+  "com.rishy.app4": {
+    "key": "com.rishy.app4",
+    "appName": "fff2",
+    "packageName": "com.rishy.app4",
+    "version": "2",
+    "startDate": "02 November 2026",
+    "id": "WAT-02FF-2026"
+  },
+  "com.rishy.app6": {
+    "key": "com.rishy.app6",
+    "appName": "fff3",
+    "packageName": "com.rishy.app6",
+    "version": "3",
+    "startDate": "03 December 2026",
+    "id": "WAT-03FF-2026"
   }
 }
