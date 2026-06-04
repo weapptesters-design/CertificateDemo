@@ -86,5 +86,13 @@
     "version": "1.2",
     "startDate": "01 June 2026",
     "id": "WAT-04FA-2026"
+  },
+  "com.vortex5afa": {
+    "key": "com.vortex5afa",
+    "appName": "5faa",
+    "packageName": "com.vortex5afa",
+    "version": "18",
+    "startDate": "01 January  2026",
+    "id": "WAT-05FA-2026"
   }
 }
