@@ -326,7 +326,7 @@ function tgSendFile(chatId, caption, fileBuffer, fileName) {
 // ─── JPG from PDF (HD) ───────────────────────────────────────────────────────
 function makeJPG(pdfPath, jpgPath) {
   execSync(
-    'gs -sDEVICE=jpeg -dJPEGQ=100 -r200' +
+    'gs -sDEVICE=jpeg -dJPEGQ=80 -r200' +
     ' -dNOPAUSE -dQUIET -dBATCH' +
     ' -dFirstPage=1 -dLastPage=1' +
     ' -sOutputFile=' + jpgPath + ' ' + pdfPath,
