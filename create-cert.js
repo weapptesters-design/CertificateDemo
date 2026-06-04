@@ -219,6 +219,11 @@ html,body{
     <div style="font-weight:800;font-size:14px;color:#1a1464;letter-spacing:0.5px;">DISCLAIMER:</div>
     <div style="flex:1;">This certificate confirms ONLY that the specified application version was tested during the stated period by <strong>We App Testers</strong>. Any subsequent updates, modifications, or newly released versions fall outside the scope of this evaluation.</div>
   </div>
+  
+</div>
+  </div>
+</div>
+
 
 </div>
 </body>
