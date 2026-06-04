@@ -343,13 +343,13 @@ function tgSendPhoto(chatId, caption, fileBuffer, fileName) {
     const body = Buffer.concat([
       Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="chat_id"\r\n\r\n' + String(chatId) + '\r\n'),
       Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="caption"\r\n\r\n' + String(caption) + '\r\n'),
-      Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="document"; filename="' + fileName + '"\r\nContent-Type: image/jpeg\r\n\r\n'),
+      Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="photo"; filename="' + fileName + '"\r\nContent-Type: image/jpeg\r\n\r\n'),
       fileBuffer,
       Buffer.from('\r\n--' + boundary + '--\r\n'),
     ]);
     const req = https.request({
       hostname: 'api.telegram.org',
-      path:     '/bot' + BOT_TOKEN + '/sendDocument',
+      path:     '/bot' + BOT_TOKEN + '/sendPhoto',
       method:   'POST',
       headers:  { 'Content-Type': 'multipart/form-data; boundary=' + boundary, 'Content-Length': body.length },
     }, res => {
@@ -414,7 +414,7 @@ async function main() {
       await tgSendFile(CHAT_ID, app.appName + '\nRef: ' + ref + '\nPkg: ' + app.packageName, pdfBuf, pdfName);
       console.log('[OK]', pdfName);
 
-      // Send JPG (HD 220dpi)
+      // Send JPG (HD 200dpi)
       const jpgName = ref + '_Certificate_' + safe + '.jpg';
       const jpgPath = path.join(OUTPUT_DIR, jpgName);
       try {
