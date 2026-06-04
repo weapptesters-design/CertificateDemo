@@ -158,5 +158,13 @@
     "version": "eh",
     "startDate": "",
     "id": "WAT-04DDF-2026"
+  },
+  "com.rishy.app10": {
+    "key": "com.rishy.app10",
+    "appName": "wy",
+    "packageName": "com.rishy.app10",
+    "version": "wy",
+    "startDate": "01 October 2026",
+    "id": "WAT-04WH-2026"
   }
 }
