@@ -26,7 +26,7 @@ function parseDate(dateStr) {
   dateStr = String(dateStr).trim();
   
   // Try '01 June 2026' or '1 June 2026' format
-  const parts = dateStr.split(/s+/);
+  const parts = dateStr.split(/\s+/);
   if (parts.length === 3) {
     const day  = parseInt(parts[0]);
     const mon  = MONTHS[parts[1].toLowerCase()];
@@ -60,7 +60,7 @@ function addDays(dateStr, days) {
 }
 
 function makeRefNumber(app) {
-  // ID column already has full ref like WAT-67V-2026
+  // ID column already has full ref like WAT-01FA-2026
   return String(app.id || 'WAT-' + new Date().getFullYear()).trim();
 }
 
