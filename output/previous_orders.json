@@ -54,5 +54,13 @@
     "version": "405v",
     "startDate": "405 June 2026",
     "id": "WAT-405CODE-2026"
+  },
+  "com.420": {
+    "key": "com.420",
+    "appName": "test420",
+    "packageName": "com.420",
+    "version": "420v",
+    "startDate": "420 June 2026",
+    "id": "WAT-420-2026"
   }
 }
