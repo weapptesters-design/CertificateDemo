@@ -198,5 +198,13 @@
     "version": "w",
     "startDate": "02 October 2026",
     "id": "WAT-2GW-2026"
+  },
+  "com.dailygeography.trivia": {
+    "key": "com.dailygeography.trivia",
+    "appName": "Geography Trivia",
+    "packageName": "com.dailygeography.trivia",
+    "version": "1.2",
+    "startDate": "08 November 2026",
+    "id": "WAT-08EC-2026"
   }
 }

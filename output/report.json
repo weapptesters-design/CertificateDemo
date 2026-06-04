@@ -1,13 +1,13 @@
 {
-  "date": "2026-06-04T13:16:09.952Z",
+  "date": "2026-06-04T13:23:25.081Z",
   "newApps": [
     {
-      "key": "com.risy.28",
-      "appName": "ws",
-      "packageName": "com.risy.28",
-      "version": "w",
-      "startDate": "02 October 2026",
-      "id": "WAT-2GW-2026"
+      "key": "com.dailygeography.trivia",
+      "appName": "Geography Trivia",
+      "packageName": "com.dailygeography.trivia",
+      "version": "1.2",
+      "startDate": "08 November 2026",
+      "id": "WAT-08EC-2026"
     }
   ],
   "changedApps": [],
