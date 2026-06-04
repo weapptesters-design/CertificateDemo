@@ -1,4 +1,4 @@
-0name: WAT Certificate Automation
+name: WAT Certificate Automation
 
 on:
   schedule:
