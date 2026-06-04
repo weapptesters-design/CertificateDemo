@@ -38,5 +38,15 @@
     "id": "WAT-50EA-2026",
     "prefix": "2026",
     "suffix": ""
+  },
+  "com.truecv.app": {
+    "key": "com.truecv.app",
+    "appName": "TrueCV",
+    "packageName": "com.truecv.app",
+    "version": "1",
+    "startDate": "01 June 2026",
+    "id": "WAT-24EC-2026",
+    "prefix": "2026",
+    "suffix": ""
   }
 }

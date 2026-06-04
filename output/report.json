@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-03T22:50:01.351Z",
+  "date": "2026-06-04T04:44:39.275Z",
   "newApps": [
     {
       "key": "com.storyrilssaver27",
@@ -20,8 +20,18 @@
       "id": "WAT-50EA-2026",
       "prefix": "2026",
       "suffix": ""
+    },
+    {
+      "key": "com.truecv.app",
+      "appName": "TrueCV",
+      "packageName": "com.truecv.app",
+      "version": "1",
+      "startDate": "01 June 2026",
+      "id": "WAT-24EC-2026",
+      "prefix": "2026",
+      "suffix": ""
     }
   ],
   "changedApps": [],
-  "totalRows": 4
+  "totalRows": 5
 }
