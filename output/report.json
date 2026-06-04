@@ -1,23 +1,6 @@
 {
-  "date": "2026-06-04T13:43:28.771Z",
-  "newApps": [
-    {
-      "key": "com.vortex77z",
-      "appName": "Vortexy",
-      "packageName": "com.vortex77z",
-      "version": "1.2",
-      "startDate": "01 June 2026",
-      "id": "WAT-04FAZ-2026"
-    },
-    {
-      "key": "com.dailygeography.triv",
-      "appName": "Simran",
-      "packageName": "com.dailygeography.triv",
-      "version": "5",
-      "startDate": "05 December 2026",
-      "id": "WAT-F6-2026"
-    }
-  ],
+  "date": "2026-06-04T14:45:08.503Z",
+  "newApps": [],
   "changedApps": [],
-  "totalRows": 31
+  "totalRows": 199
 }
