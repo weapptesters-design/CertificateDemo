@@ -1,13 +1,13 @@
 {
-  "date": "2026-06-04T11:00:10.698Z",
+  "date": "2026-06-04T11:03:50.631Z",
   "newApps": [
     {
-      "key": "com.4239",
-      "appName": "whw",
-      "packageName": "com.4239",
-      "version": "hw",
-      "startDate": "wh June 2026",
-      "id": "WAT-5EST-2026"
+      "key": "com.vortex",
+      "appName": "Vortexy",
+      "packageName": "com.vortex",
+      "version": "1.2",
+      "startDate": "01 June 2026",
+      "id": "WAT-04FA-2026"
     }
   ],
   "changedApps": [],

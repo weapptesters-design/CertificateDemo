@@ -78,5 +78,13 @@
     "version": "hw",
     "startDate": "wh June 2026",
     "id": "WAT-5EST-2026"
+  },
+  "com.vortex": {
+    "key": "com.vortex",
+    "appName": "Vortexy",
+    "packageName": "com.vortex",
+    "version": "1.2",
+    "startDate": "01 June 2026",
+    "id": "WAT-04FA-2026"
   }
 }
