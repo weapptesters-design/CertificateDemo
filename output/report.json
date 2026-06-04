@@ -1,13 +1,13 @@
 {
-  "date": "2026-06-04T09:24:39.897Z",
+  "date": "2026-06-04T09:31:23.503Z",
   "newApps": [
     {
-      "key": "com.ajajaj",
-      "appName": "Abc",
-      "packageName": "com.ajajaj",
-      "version": "1",
-      "startDate": "02 June 2026",
-      "id": "WAT-ABX1-2026"
+      "key": "com.ajajaj3",
+      "appName": "test",
+      "packageName": "com.ajajaj3",
+      "version": "4",
+      "startDate": "03 June 2026",
+      "id": "WAT-TEST3PM-2026"
     }
   ],
   "changedApps": [],

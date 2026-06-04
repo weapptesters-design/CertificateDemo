@@ -14,5 +14,13 @@
     "version": "1",
     "startDate": "02 June 2026",
     "id": "WAT-ABX1-2026"
+  },
+  "com.ajajaj3": {
+    "key": "com.ajajaj3",
+    "appName": "test",
+    "packageName": "com.ajajaj3",
+    "version": "4",
+    "startDate": "03 June 2026",
+    "id": "WAT-TEST3PM-2026"
   }
 }
