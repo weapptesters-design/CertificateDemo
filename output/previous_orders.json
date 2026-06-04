@@ -30,5 +30,13 @@
     "version": "306",
     "startDate": "306 June 2026",
     "id": "WAT-TEST306-2026"
+  },
+  "com.309": {
+    "key": "com.309",
+    "appName": "test309",
+    "packageName": "com.309",
+    "version": "309",
+    "startDate": "309 June 2026",
+    "id": "WAT-TEST309-2026"
   }
 }
