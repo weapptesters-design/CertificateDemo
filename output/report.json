@@ -1,6 +1,23 @@
 {
-  "date": "2026-06-04T11:41:30.437Z",
-  "newApps": [],
+  "date": "2026-06-04T11:55:20.026Z",
+  "newApps": [
+    {
+      "key": "com.vortex5afa70537",
+      "appName": "tg",
+      "packageName": "com.vortex5afa70537",
+      "version": "n",
+      "startDate": "06 August 2026",
+      "id": "WAT-55FG-2026"
+    },
+    {
+      "key": "com.rishy.app2",
+      "appName": "Rishu",
+      "packageName": "com.rishy.app2",
+      "version": "1.2",
+      "startDate": "04 September 2026",
+      "id": "WAT-04RX-2026"
+    }
+  ],
   "changedApps": [],
   "totalRows": 23
 }

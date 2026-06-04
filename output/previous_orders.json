@@ -110,5 +110,21 @@
     "version": "g",
     "startDate": "503 July 2026",
     "id": "WAT-07DA-2026"
+  },
+  "com.vortex5afa70537": {
+    "key": "com.vortex5afa70537",
+    "appName": "tg",
+    "packageName": "com.vortex5afa70537",
+    "version": "n",
+    "startDate": "06 August 2026",
+    "id": "WAT-55FG-2026"
+  },
+  "com.rishy.app2": {
+    "key": "com.rishy.app2",
+    "appName": "Rishu",
+    "packageName": "com.rishy.app2",
+    "version": "1.2",
+    "startDate": "04 September 2026",
+    "id": "WAT-04RX-2026"
   }
 }
