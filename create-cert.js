@@ -13,18 +13,50 @@ const LOGO_URL = 'https://i.ibb.co/bM7b6WSn/Icon-comp.png';
 const SEAL_URL = 'https://i.ibb.co/SXRYz54d/Badge-comp.png';
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
+const MONTHS = {
+  'january':1,'february':2,'march':3,'april':4,'may':5,'june':6,
+  'july':7,'august':8,'september':9,'october':10,'november':11,'december':12,
+  'jan':1,'feb':2,'mar':3,'apr':4,'jun':6,'jul':7,'aug':8,
+  'sep':9,'oct':10,'nov':11,'dec':12
+};
+
+// Parse '01 June 2026' or '2026-06-01' or any common format
+function parseDate(dateStr) {
+  if (!dateStr) return null;
+  dateStr = String(dateStr).trim();
+  
+  // Try '01 June 2026' or '1 June 2026' format
+  const parts = dateStr.split(/s+/);
+  if (parts.length === 3) {
+    const day  = parseInt(parts[0]);
+    const mon  = MONTHS[parts[1].toLowerCase()];
+    const year = parseInt(parts[2]);
+    if (day && mon && year) return new Date(year, mon-1, day);
+  }
+  
+  // Try YYYY-MM-DD
+  const iso = new Date(dateStr + 'T00:00:00');
+  if (!isNaN(iso)) return iso;
+  
+  // Try any format
+  const generic = new Date(dateStr);
+  if (!isNaN(generic)) return generic;
+  
+  return null;
+}
+
 function formatDate(dateStr) {
   if (!dateStr) return '--';
-  const d = new Date(dateStr + 'T00:00:00');
-  if (!isNaN(d)) return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
-  return String(dateStr);
+  const d = parseDate(dateStr);
+  if (d) return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+  return String(dateStr); // return as-is if can't parse
 }
 
 function addDays(dateStr, days) {
-  const d = new Date(dateStr + 'T00:00:00');
-  if (isNaN(d)) return '';
+  const d = parseDate(dateStr);
+  if (!d) return '';
   d.setDate(d.getDate() + days);
-  return d.toISOString().split('T')[0];
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
 }
 
 function makeRefNumber(app) {
@@ -40,8 +72,8 @@ function todayFormatted() {
 function makeCertHTML(app) {
   const ref    = makeRefNumber(app);
   const start  = app.startDate || new Date().toISOString().split('T')[0];
-  const end    = addDays(start, 14);
-  const period = formatDate(start) + ' \u2013 ' + formatDate(end);
+  const endFormatted = addDays(start, 14);
+  const period = formatDate(start) + ' \u2013 ' + (endFormatted || '--');
   const issued = todayFormatted();
   const appName = String(app.appName     || 'Unknown App');
   const pkg     = String(app.packageName || '--');
@@ -157,9 +189,10 @@ async function makePDF(html, pdfPath, htmlPath) {
     chrome +
     ' --headless=new --no-sandbox --disable-setuid-sandbox' +
     ' --disable-dev-shm-usage --disable-gpu' +
-    ' --virtual-time-budget=8000' +
+    ' --virtual-time-budget=12000' +
     ' --run-all-compositor-stages-before-draw' +
     ' --force-device-scale-factor=2' +
+    ' --window-size=1123,794' +
     ' --print-to-pdf=' + pdfPath +
     ' --print-to-pdf-no-header --no-pdf-header-footer' +
     ' --paper-width=11.69 --paper-height=8.27' +
