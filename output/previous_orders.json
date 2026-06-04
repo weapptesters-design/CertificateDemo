@@ -1,1 +1,10 @@
-{}
+{
+  "erp.ecodemix.mycps": {
+    "key": "erp.ecodemix.mycps",
+    "appName": "My CPS",
+    "packageName": "erp.ecodemix.mycps",
+    "version": "1.0.1",
+    "startDate": "10 April 2026",
+    "id": "WAT-05DC-2026"
+  }
+}

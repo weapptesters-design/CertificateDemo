@@ -1,6 +1,15 @@
 {
-  "date": "2026-06-04T14:45:08.503Z",
-  "newApps": [],
+  "date": "2026-06-04T14:50:13.396Z",
+  "newApps": [
+    {
+      "key": "erp.ecodemix.mycps",
+      "appName": "My CPS",
+      "packageName": "erp.ecodemix.mycps",
+      "version": "1.0.1",
+      "startDate": "10 April 2026",
+      "id": "WAT-05DC-2026"
+    }
+  ],
   "changedApps": [],
   "totalRows": 199
 }
