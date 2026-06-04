@@ -1,5 +1,6 @@
 /**
  * create-cert.js — We App Testers
+ * Exact same certificate as manual tool
  */
 
 const fs    = require('fs');
@@ -9,130 +10,75 @@ const { execSync } = require('child_process');
 
 const OUTPUT_DIR  = path.join(__dirname, 'output');
 const REPORT_FILE = path.join(OUTPUT_DIR, 'report.json');
+const ASSETS_FILE = path.join(__dirname, 'assets.js');
 const BOT_TOKEN   = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID     = process.env.TELEGRAM_CHAT_ID;
+
+// ─── LOAD ASSETS (logo + seal base64 from assets.js) ─────────────────────────
+function loadAssets() {
+  if (!fs.existsSync(ASSETS_FILE)) {
+    console.log('[ASSETS] assets.js not found, images will be missing');
+    return { logo: '', seal: '' };
+  }
+  try {
+    // assets.js sets window.APP_ASSETS = { logo: '...', seal: '...' }
+    // We eval it in a fake window context
+    const code = fs.readFileSync(ASSETS_FILE, 'utf8');
+    const fakeWindow = {};
+    const fn = new Function('window', code);
+    fn(fakeWindow);
+    const assets = fakeWindow.APP_ASSETS || {};
+    console.log('[ASSETS] Loaded. Logo:', !!assets.logo, '| Seal:', !!assets.seal);
+    return assets;
+  } catch(e) {
+    console.error('[ASSETS] Failed to load:', e.message);
+    return { logo: '', seal: '' };
+  }
+}
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
 function formatDate(dateStr) {
   if (!dateStr) return '--';
-  const d = new Date(dateStr);
+  const d = new Date(dateStr + 'T00:00:00');
   if (!isNaN(d)) return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
   return String(dateStr);
 }
 
 function addDays(dateStr, days) {
-  const d = new Date(dateStr);
+  const d = new Date(dateStr + 'T00:00:00');
   if (isNaN(d)) return '';
   d.setDate(d.getDate() + days);
   return d.toISOString().split('T')[0];
 }
 
-function makeRefNumber(app, idx) {
-  const prefix = String(app.prefix || 'WAT');
-  const id     = String(app.id || String(idx + 1).padStart(3, '0'));
+// Naming: WAT-{ID}-{YEAR}  (prefix from CSV or 'WAT', id from CSV)
+function makeRefNumber(app) {
+  const prefix = String(app.prefix || 'WAT').trim();
+  const id     = String(app.id || '').trim().toUpperCase();
   const year   = new Date().getFullYear();
-  return prefix + '-' + id + '-' + year;
+  if (id) return prefix + '-' + id + '-' + year;
+  return prefix + '-' + year;
 }
 
 function todayFormatted() {
   return new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
 }
 
-// ─── TELEGRAM ─────────────────────────────────────────────────────────────────
-function tgPost(method, jsonBody) {
-  return new Promise((resolve, reject) => {
-    const bodyBuf = Buffer.from(JSON.stringify(jsonBody), 'utf8');
-    const req = https.request({
-      hostname: 'api.telegram.org',
-      path:     '/bot' + BOT_TOKEN + '/' + method,
-      method:   'POST',
-      headers: {
-        'Content-Type':   'application/json; charset=utf-8',
-        'Content-Length': bodyBuf.length,
-      },
-    }, res => {
-      let raw = '';
-      res.on('data', c => raw += c);
-      res.on('end', () => {
-        console.log('[TG]', method, res.statusCode, raw.slice(0, 200));
-        try {
-          const p = JSON.parse(raw);
-          p.ok ? resolve(p) : reject(new Error(p.description || 'TG error'));
-        } catch(e) { reject(new Error('Parse error: ' + raw.slice(0,100))); }
-      });
-    });
-    req.on('error', reject);
-    req.write(bodyBuf);
-    req.end();
-  });
-}
+// ─── CERTIFICATE HTML (exact copy of your manual tool template) ───────────────
+function makeCertHTML(app, assets) {
+  const ref     = makeRefNumber(app);
+  const start   = app.startDate || new Date().toISOString().split('T')[0];
+  const end     = addDays(start, 14);
+  const period  = formatDate(start) + ' \u2013 ' + formatDate(end);
+  const issued  = todayFormatted();
+  const appName = String(app.appName     || 'Unknown App');
+  const pkg     = String(app.packageName || '--');
+  const ver     = String(app.version     || '--');
 
-function tgSendFile(chatId, caption, fileBuffer, fileName) {
-  return new Promise((resolve, reject) => {
-    const boundary = 'WAT' + Date.now();
-    const parts = [];
-
-    // chat_id
-    parts.push(Buffer.from(
-      '--' + boundary + '\r\n' +
-      'Content-Disposition: form-data; name="chat_id"\r\n\r\n' +
-      String(chatId) + '\r\n'
-    ));
-    // caption
-    parts.push(Buffer.from(
-      '--' + boundary + '\r\n' +
-      'Content-Disposition: form-data; name="caption"\r\n\r\n' +
-      String(caption) + '\r\n'
-    ));
-    // file
-    parts.push(Buffer.from(
-      '--' + boundary + '\r\n' +
-      'Content-Disposition: form-data; name="document"; filename="' + fileName + '"\r\n' +
-      'Content-Type: application/pdf\r\n\r\n'
-    ));
-    parts.push(fileBuffer);
-    parts.push(Buffer.from('\r\n--' + boundary + '--\r\n'));
-
-    const body = Buffer.concat(parts);
-    const req = https.request({
-      hostname: 'api.telegram.org',
-      path:     '/bot' + BOT_TOKEN + '/sendDocument',
-      method:   'POST',
-      headers: {
-        'Content-Type':   'multipart/form-data; boundary=' + boundary,
-        'Content-Length': body.length,
-      },
-    }, res => {
-      let raw = '';
-      res.on('data', c => raw += c);
-      res.on('end', () => {
-        console.log('[TG] sendDocument', res.statusCode, raw.slice(0, 200));
-        try {
-          const p = JSON.parse(raw);
-          p.ok ? resolve(p) : reject(new Error(p.description || 'TG error'));
-        } catch(e) { reject(new Error('Parse error: ' + raw.slice(0,100))); }
-      });
-    });
-    req.on('error', reject);
-    req.write(body);
-    req.end();
-  });
-}
-
-async function tgSend(chatId, text) {
-  return tgPost('sendMessage', { chat_id: chatId, text: text });
-}
-
-// ─── CERTIFICATE HTML ─────────────────────────────────────────────────────────
-function makeCertHTML(app, idx) {
-  const ref        = makeRefNumber(app, idx);
-  const start      = app.startDate || new Date().toISOString().split('T')[0];
-  const end        = addDays(start, 14);
-  const period     = formatDate(start) + ' - ' + formatDate(end);
-  const issued     = todayFormatted();
-  const appName    = String(app.appName    || 'Unknown App');
-  const pkg        = String(app.packageName|| '--');
-  const ver        = String(app.version    || '1.0.0');
+  const logoSrc   = assets.logo ? 'data:image/png;base64,' + assets.logo : '';
+  const sealSrc   = assets.seal ? 'data:image/png;base64,' + assets.seal : '';
+  const logoTag   = logoSrc ? `<img src="${logoSrc}" style="width:70px;height:70px;object-fit:contain;">` : '';
+  const sealTag   = sealSrc ? `<img src="${sealSrc}" alt="Verified Badge" style="position:absolute;bottom:8px;right:0px;width:140px;height:140px;object-fit:contain;z-index:10;">` : '';
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -140,77 +86,96 @@ function makeCertHTML(app, idx) {
 <meta charset="UTF-8">
 <title>Certificate</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Montserrat:wght@400;600;700;800&family=DM+Sans:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1123px;height:794px;overflow:hidden;background:#1B5E20;font-family:'DM Sans',sans-serif}
-.page{width:1123px;height:794px;background:#fff;border:12px solid #1B5E20;border-radius:6px;padding:30px 36px 22px;display:flex;flex-direction:column}
-.row{display:flex;border-bottom:1px solid #dcdcdc;padding:7px 15px}
-.row:last-child{border-bottom:none}
-.lbl{width:35%;font-weight:700;color:#1a1a1a;font-size:13px}
-.val{width:65%;color:#444;font-size:13px;word-break:break-word}
+#pdf-container{
+  width:1123px;height:794px;background:#fff;
+  border:12px solid #1B5E20;border-radius:6px;
+  padding:32px 36px 24px;
+  display:flex;flex-direction:column;position:relative;
+}
+.cert-row{display:flex;border-bottom:1px solid #dcdcdc;padding:7px 15px}
+.cert-row:last-child{border-bottom:none}
+.cert-label{width:35%;font-weight:bold;color:#1a1a1a;font-size:13.5px;text-align:left}
+.cert-value{width:65%;color:#444;font-size:13.5px;word-break:break-word;text-align:left}
 </style>
 </head>
 <body>
-<div class="page">
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;flex-shrink:0">
-    <div>
-      <div style="font-family:Montserrat,sans-serif;font-size:26px;font-weight:800;color:#1a1464">WE <span style="color:#4CAF50">APP</span> TESTERS</div>
-      <div style="font-size:13px;color:#707070;font-weight:600">Android Testing Experts</div>
+<div id="pdf-container">
+
+  <!-- Header: Logo + Brand + Ref -->
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:15px;flex-shrink:0;">
+    <div style="display:flex;align-items:center;gap:15px;">
+      ${logoTag}
+      <div>
+        <div style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:800;color:#1a1464;letter-spacing:1px;">WE <span style="color:#4CAF50;">APP</span> TESTERS</div>
+        <div style="font-size:14px;color:#707070;text-align:left;font-weight:600;">Android Testing Experts</div>
+      </div>
     </div>
-    <div style="text-align:right;color:#333;font-size:13px;margin-top:4px">
-      <div style="font-weight:600;margin-bottom:3px">Testing Reference: <strong>${ref}</strong></div>
-      <div style="font-weight:600">Issue Date: ${issued}</div>
+    <div style="text-align:right;color:#333;font-size:14px;margin-top:5px;">
+      <div style="font-weight:600;margin-bottom:3px;">Testing Reference: <strong>${ref}</strong></div>
+      <div style="font-weight:600;">Issue Date: ${issued}</div>
     </div>
   </div>
 
-  <div style="height:1.5px;background:#dcdcdc;margin-bottom:11px;flex-shrink:0"></div>
+  <div style="height:1.5px;background:#dcdcdc;margin-bottom:12px;flex-shrink:0;"></div>
 
-  <div style="text-align:center;margin-bottom:11px;flex-shrink:0">
-    <div style="font-family:Montserrat,sans-serif;font-size:26px;font-weight:800;color:#1a1a1a">APP TESTING COMPLETION CERTIFICATE</div>
-    <div style="font-size:13px;color:#666;font-weight:600;letter-spacing:1px;margin-top:4px">CERTIFICATE OF TESTING</div>
-    <div style="width:100px;height:3px;background:#C9A84C;margin:8px auto 0"></div>
+  <!-- Title -->
+  <div style="text-align:center;margin-bottom:12px;flex-shrink:0;">
+    <div style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:800;color:#1a1a1a;">APP TESTING COMPLETION CERTIFICATE</div>
+    <div style="font-size:14px;color:#666;font-weight:600;letter-spacing:1px;margin-top:4px;">CERTIFICATE OF TESTING</div>
+    <div style="width:100px;height:3px;background:#C9A84C;margin:10px auto 0;"></div>
   </div>
 
-  <p style="font-size:12.5px;color:#444;line-height:1.5;margin-bottom:11px;text-align:justify;flex-shrink:0">
+  <p style="font-size:13px;color:#444;line-height:1.5;margin-bottom:12px;text-align:justify;flex-shrink:0;">
     This is to certify that the Android application listed below has successfully completed a structured testing process conducted by We App Testers.
   </p>
 
-  <div style="width:100%;border:1px solid #dcdcdc;border-radius:8px;overflow:hidden;margin-bottom:13px;flex-shrink:0">
-    <div class="row" style="background:#E8F0E6"><div class="lbl">App Name:</div><div class="val" style="font-weight:700;color:#1a1a1a">${appName}</div></div>
-    <div class="row" style="background:#F5F8F4"><div class="lbl">Package Name:</div><div class="val">${pkg}</div></div>
-    <div class="row" style="background:#E8F0E6"><div class="lbl">Version Tested:</div><div class="val">${ver}</div></div>
-    <div class="row" style="background:#F5F8F4"><div class="lbl">Testing Type:</div><div class="val" style="font-style:italic;font-weight:600">Closed Testing</div></div>
-    <div class="row" style="background:#E8F0E6"><div class="lbl">Number of Testers:</div><div class="val">12+ Testers</div></div>
-    <div class="row" style="background:#F5F8F4"><div class="lbl">Testing Period:</div><div class="val">${period}</div></div>
+  <!-- Data Table -->
+  <div style="width:100%;border:1px solid #dcdcdc;border-radius:8px;overflow:hidden;margin-bottom:15px;flex-shrink:0;">
+    <div class="cert-row" style="background:#E8F0E6;"><div class="cert-label">App Name:</div><div class="cert-value" style="font-weight:bold;color:#1a1a1a;">${appName}</div></div>
+    <div class="cert-row" style="background:#F5F8F4;"><div class="cert-label">Package Name:</div><div class="cert-value">${pkg}</div></div>
+    <div class="cert-row" style="background:#E8F0E6;"><div class="cert-label">Version Tested:</div><div class="cert-value">${ver}</div></div>
+    <div class="cert-row" style="background:#F5F8F4;"><div class="cert-label">Testing Type:</div><div class="cert-value" style="font-style:italic;font-weight:600;">Closed Testing</div></div>
+    <div class="cert-row" style="background:#E8F0E6;"><div class="cert-label">Number of Testers:</div><div class="cert-value">12+ Testers</div></div>
+    <div class="cert-row" style="background:#F5F8F4;"><div class="cert-label">Testing Period:</div><div class="cert-value">${period}</div></div>
   </div>
 
-  <p style="font-size:13px;color:#555;line-height:1.5;text-align:justify;flex-shrink:0">
-    During the testing period, the application was installed and used by multiple testers across different Android devices. Testers evaluated installation flow, basic functionality, usability, and overall app performance while providing feedback.
+  <p style="font-size:13.5px;color:#555;line-height:1.5;text-align:justify;margin-bottom:0;flex-shrink:0;">
+    During the testing period, the application was installed and used by multiple testers across different Android devices. Testers evaluated installation flow, basic functionality, usability, and overall app performance while providing feedback during the testing period.
   </p>
 
-  <div style="flex-grow:1;min-height:10px"></div>
+  <div style="flex-grow:1;min-height:15px;"></div>
 
-  <div style="flex-shrink:0;padding-bottom:4px">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;padding-right:20px">
-      <div style="display:flex;flex-direction:column;gap:2px">
-        <div style="font-weight:800;font-size:13px;color:#333;text-transform:uppercase">Issued By:</div>
-        <div style="font-family:Montserrat,sans-serif;font-weight:900;font-size:20px;color:#1a1464;text-transform:uppercase">WE <span style="color:#4CAF50">APP</span> TESTERS</div>
-        <div style="font-size:12px;color:#666;font-weight:600">Android App Testing Service</div>
-        <div style="font-size:13px;color:#444;font-weight:600;margin-top:4px">+91 91220 61839</div>
-        <div style="font-size:13px;color:#1565c0;font-weight:700;margin-top:2px">WeAppTesters.com</div>
+  <!-- Footer -->
+  <div style="position:relative;width:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:5px;flex-shrink:0;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;padding-right:170px;">
+      <div style="text-align:left;display:flex;flex-direction:column;gap:3px;">
+        <div style="font-weight:800;font-size:14.5px;color:#333;margin-bottom:2px;text-transform:uppercase;letter-spacing:0.5px;">Issued By:</div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:22px;color:#1a1464;letter-spacing:1px;line-height:1.1;text-transform:uppercase;">WE <span style="color:#4CAF50;">APP</span> TESTERS</div>
+        <div style="font-size:13px;color:#666;font-weight:600;display:flex;align-items:center;gap:5px;">
+          <div style="width:6px;height:6px;border-radius:50%;background:#4caf50;display:inline-block;"></div>
+          Android App Testing Service
+        </div>
+        <div style="font-size:14.5px;color:#444;font-weight:600;margin-top:6px;">📞 +91 91220 61839</div>
+        <div style="font-size:14.5px;color:#1565c0;font-weight:700;margin-top:3px;">🌐 WeAppTesters.com</div>
       </div>
-      <div style="text-align:center">
-        <div style="font-family:'Caveat',cursive;font-weight:700;font-size:36px;color:#1a1464;line-height:1;padding-bottom:4px">Kumkum Rani</div>
-        <div style="width:180px;height:1.5px;background:#666;margin:0 auto 5px"></div>
-        <div style="font-size:12px;color:#1a1a1a;font-weight:600;text-transform:uppercase;letter-spacing:1px">Testing Manager</div>
+      <div style="text-align:center;">
+        <div style="font-family:'Caveat',cursive;font-weight:700;font-size:38px;color:#1a1464;margin-bottom:-10px;line-height:1;padding-bottom:5px;">Kumkum Rani</div>
+        <div style="width:180px;height:1.5px;background:#666;margin-bottom:6px;margin-left:auto;margin-right:auto;"></div>
+        <div style="font-size:13px;color:#1a1a1a;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Testing Manager</div>
       </div>
     </div>
+    ${sealTag}
   </div>
 
-  <div style="margin-top:10px;font-size:12px;color:#444;line-height:1.5;border-top:1px solid #e0e0e0;flex-shrink:0;display:flex;gap:8px;background:rgba(0,0,0,0.02);padding:10px 14px;border-radius:6px">
-    <div style="font-weight:800;font-size:12px;color:#1a1464;white-space:nowrap">DISCLAIMER:</div>
-    <div>This certificate confirms ONLY that the specified application version was tested during the stated period by <strong>We App Testers</strong>. Any subsequent updates or newly released versions fall outside the scope of this evaluation.</div>
+  <!-- Disclaimer -->
+  <div style="margin-top:16px;font-size:13.5px;color:#444;text-align:left;line-height:1.6;border-top:1px solid #e0e0e0;flex-shrink:0;display:flex;align-items:flex-start;gap:8px;background:rgba(0,0,0,0.02);padding:14px 16px;border-radius:6px;">
+    <div style="font-weight:800;font-size:14px;color:#1a1464;letter-spacing:0.5px;">DISCLAIMER:</div>
+    <div style="flex:1;">This certificate confirms ONLY that the specified application version was tested during the stated period by <strong>We App Testers</strong>. Any subsequent updates, modifications, or newly released versions fall outside the scope of this evaluation.</div>
   </div>
+
 </div>
 </body>
 </html>`;
@@ -226,96 +191,160 @@ async function makePDF(html, pdfPath, htmlPath) {
     '/usr/bin/chromium-browser',
     '/usr/bin/chromium',
   ];
-
   let chrome = null;
-  for (const c of candidates) {
-    if (fs.existsSync(c)) { chrome = c; break; }
-  }
+  for (const c of candidates) { if (fs.existsSync(c)) { chrome = c; break; } }
   if (!chrome) {
     try { chrome = execSync('which google-chrome-stable || which google-chrome || which chromium', { encoding: 'utf8' }).trim().split('\n')[0]; } catch(_){}
   }
   if (!chrome) throw new Error('Chrome not found');
   console.log('[PDF] Chrome:', chrome);
 
+  // --virtual-time-budget gives fonts/images time to load before render
   execSync(
     chrome +
     ' --headless=new --no-sandbox --disable-setuid-sandbox' +
     ' --disable-dev-shm-usage --disable-gpu' +
-    ' --virtual-time-budget=5000' +
+    ' --virtual-time-budget=8000' +
+    ' --run-all-compositor-stages-before-draw' +
     ' --print-to-pdf=' + pdfPath +
     ' --print-to-pdf-no-header' +
+    ' --no-pdf-header-footer' +
+    ' --paper-width=11.69 --paper-height=8.27' +
     ' file://' + htmlPath,
-    { timeout: 30000, stdio: 'pipe' }
+    { timeout: 40000, stdio: 'pipe' }
   );
 
-  if (!fs.existsSync(pdfPath)) throw new Error('PDF file not created');
-  console.log('[PDF] Done:', pdfPath, fs.statSync(pdfPath).size, 'bytes');
+  if (!fs.existsSync(pdfPath)) throw new Error('PDF not created');
+  const size = fs.statSync(pdfPath).size;
+  console.log('[PDF] Created:', pdfPath, size, 'bytes');
   try { fs.unlinkSync(htmlPath); } catch(_){}
   return fs.readFileSync(pdfPath);
+}
+
+// ─── TELEGRAM ─────────────────────────────────────────────────────────────────
+function tgPost(method, jsonBody) {
+  return new Promise((resolve, reject) => {
+    const bodyBuf = Buffer.from(JSON.stringify(jsonBody), 'utf8');
+    const req = https.request({
+      hostname: 'api.telegram.org',
+      path:     '/bot' + BOT_TOKEN + '/' + method,
+      method:   'POST',
+      headers:  { 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': bodyBuf.length },
+    }, res => {
+      let raw = '';
+      res.on('data', c => raw += c);
+      res.on('end', () => {
+        console.log('[TG]', method, res.statusCode, raw.slice(0, 200));
+        try {
+          const p = JSON.parse(raw);
+          p.ok ? resolve(p) : reject(new Error(p.description || 'TG error'));
+        } catch(e) { reject(new Error('Parse: ' + raw.slice(0,100))); }
+      });
+    });
+    req.on('error', reject);
+    req.write(bodyBuf);
+    req.end();
+  });
+}
+
+function tgSendFile(chatId, caption, fileBuffer, fileName) {
+  return new Promise((resolve, reject) => {
+    const boundary = 'WAT' + Date.now();
+    const parts = [
+      Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="chat_id"\r\n\r\n' + String(chatId) + '\r\n'),
+      Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="caption"\r\n\r\n' + String(caption) + '\r\n'),
+      Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="document"; filename="' + fileName + '"\r\nContent-Type: application/pdf\r\n\r\n'),
+      fileBuffer,
+      Buffer.from('\r\n--' + boundary + '--\r\n'),
+    ];
+    const body = Buffer.concat(parts);
+    const req = https.request({
+      hostname: 'api.telegram.org',
+      path:     '/bot' + BOT_TOKEN + '/sendDocument',
+      method:   'POST',
+      headers:  { 'Content-Type': 'multipart/form-data; boundary=' + boundary, 'Content-Length': body.length },
+    }, res => {
+      let raw = '';
+      res.on('data', c => raw += c);
+      res.on('end', () => {
+        console.log('[TG] sendDocument', res.statusCode, raw.slice(0, 200));
+        try {
+          const p = JSON.parse(raw);
+          p.ok ? resolve(p) : reject(new Error(p.description || 'TG error'));
+        } catch(e) { reject(new Error('Parse: ' + raw.slice(0,100))); }
+      });
+    });
+    req.on('error', reject);
+    req.write(body);
+    req.end();
+  });
+}
+
+async function tgSend(chatId, text) {
+  return tgPost('sendMessage', { chat_id: chatId, text: text });
 }
 
 // ─── MAIN ────────────────────────────────────────────────────────────────────
 async function main() {
   console.log('=== WAT create-cert.js ===');
   console.log('[TIME]', new Date().toISOString());
-  console.log('[ENV] BOT_TOKEN set:', !!BOT_TOKEN, '| CHAT_ID:', CHAT_ID);
 
   if (!BOT_TOKEN || !CHAT_ID) { console.error('Missing Telegram secrets'); process.exit(1); }
   if (!fs.existsSync(REPORT_FILE)) { console.error('report.json missing'); process.exit(1); }
 
-  const report      = JSON.parse(fs.readFileSync(REPORT_FILE, 'utf8'));
-  const newApps     = Array.isArray(report.newApps) ? report.newApps : [];
-  const changedApps = Array.isArray(report.changedApps) ? report.changedApps : [];
-  const today       = todayFormatted();
+  const assets  = loadAssets();
+  const report  = JSON.parse(fs.readFileSync(REPORT_FILE, 'utf8'));
+  const newApps = Array.isArray(report.newApps) ? report.newApps : [];
+  const today   = todayFormatted();
 
-  console.log('[REPORT] New:', newApps.length, '| Changed:', changedApps.length);
+  console.log('[REPORT] New:', newApps.length);
 
   if (newApps.length === 0) {
-    const msg = 'Certificate Report\nDate: ' + today + '\n\nNo new apps today. All systems up to date.';
-    console.log('[MSG]', JSON.stringify(msg));
-    await tgSend(CHAT_ID, msg);
+    await tgSend(CHAT_ID, 'Certificate Report\nDate: ' + today + '\n\nNo new apps today. All systems up to date.');
     console.log('[DONE] No new apps.');
     return;
   }
 
   const appList = newApps.map((a, i) => (i+1) + '. ' + a.appName + ' (' + a.packageName + ')').join('\n');
-  const msg = 'Certificate Report\nDate: ' + today + '\n\n' + newApps.length + ' new app(s) found!\n\n' + appList + '\n\nGenerating PDFs...';
-  console.log('[MSG]', JSON.stringify(msg));
-  await tgSend(CHAT_ID, msg);
+  await tgSend(CHAT_ID, 'Certificate Report\nDate: ' + today + '\n\n' + newApps.length + ' new app(s) found!\n\n' + appList + '\n\nGenerating PDFs...');
 
   let ok = 0, fail = 0;
-  for (let i = 0; i < newApps.length; i++) {
-    const app  = newApps[i];
-    const ref  = makeRefNumber(app, i);
-    const safe = (app.appName || 'app').replace(/[^a-zA-Z0-9_-]/g, '_');
-    const pdfName  = ref + '_Certificate_' + safe + '.pdf';
-    const pdfPath  = path.join(OUTPUT_DIR, pdfName);
-    const htmlPath = path.join(OUTPUT_DIR, '_tmp_' + safe + '.html');
 
-    console.log('\n[' + (i+1) + '/' + newApps.length + ']', app.appName);
+  for (let i = 0; i < newApps.length; i++) {
+    const app     = newApps[i];
+    const ref     = makeRefNumber(app);
+    const safe    = (app.appName || 'app').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const pdfName = ref + '_Certificate_' + safe + '.pdf';
+    const pdfPath = path.join(OUTPUT_DIR, pdfName);
+    const htmlPath= path.join(OUTPUT_DIR, '_tmp_' + safe + '.html');
+
+    console.log('\n[' + (i+1) + '/' + newApps.length + ']', app.appName, '| Ref:', ref);
 
     try {
-      const html   = makeCertHTML(app, i);
+      const html   = makeCertHTML(app, assets);
       const pdfBuf = await makePDF(html, pdfPath, htmlPath);
       const caption = app.appName + '\nRef: ' + ref + '\nPkg: ' + app.packageName;
       await tgSendFile(CHAT_ID, caption, pdfBuf, pdfName);
+      console.log('[OK]', pdfName);
       ok++;
-      if (i < newApps.length - 1) await new Promise(r => setTimeout(r, 800));
     } catch(e) {
       console.error('[ERROR]', e.message);
       fail++;
     }
+
+    // 5 second gap between each certificate (fonts/images load time)
+    if (i < newApps.length - 1) {
+      console.log('[WAIT] 5 seconds before next cert...');
+      await new Promise(r => setTimeout(r, 5000));
+    }
   }
 
-  const doneMsg = 'Done!\nPDFs sent: ' + ok + '/' + newApps.length + (fail > 0 ? '\nFailed: ' + fail : '');
-  await tgSend(CHAT_ID, doneMsg);
+  await tgSend(CHAT_ID, 'Done!\nPDFs sent: ' + ok + '/' + newApps.length + (fail > 0 ? '\nFailed: ' + fail : ''));
   console.log('=== DONE | OK:', ok, '| Failed:', fail, '===');
 }
 
 main().catch(e => {
   console.error('[FATAL]', e.message);
-  if (BOT_TOKEN && CHAT_ID) {
-    tgSend(CHAT_ID, 'WAT Error: ' + e.message).catch(()=>{});
-  }
+  if (BOT_TOKEN && CHAT_ID) tgSend(CHAT_ID, 'WAT Error: ' + e.message).catch(()=>{});
   process.exit(1);
 });
