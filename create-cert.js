@@ -201,20 +201,18 @@ async function makePDF(html, pdfPath, htmlPath) {
   // Use Chrome to screenshot at 2x scale then save as PDF
   // Viewport = 1123x794, scale=2 → 2246x1548 image → fit into A4 landscape PDF
   execSync(
-    chrome +
-    ' --headless=new --no-sandbox --disable-setuid-sandbox' +
-    ' --disable-dev-shm-usage --disable-gpu' +
-    ' --virtual-time-budget=12000' +
-    ' --run-all-compositor-stages-before-draw' +
-    ' --force-device-scale-factor=2' +
-    ' --window-size=1123,794' +
-    ' --print-to-pdf=' + pdfPath +
-    ' --print-to-pdf-no-header --no-pdf-header-footer' +
-    ' --paper-width=11.69 --paper-height=8.27' +
-    ' file://' + htmlPath,
-    { timeout: 40000, stdio: 'pipe' }
-  );
-
+  chrome +
+  ' --headless=new --no-sandbox --disable-setuid-sandbox' +
+  ' --disable-dev-shm-usage --disable-gpu' +
+  ' --virtual-time-budget=12000' +
+  ' --run-all-compositor-stages-before-draw' +
+  ' --print-to-pdf=' + pdfPath +
+  ' --print-to-pdf-no-header' +
+  ' --no-pdf-header-footer' +
+  ' --landscape' +
+  ' file://' + htmlPath,
+  { timeout: 40000, stdio: 'pipe' }
+);
     if (!fs.existsSync(pdfPath)) throw new Error('PDF not created');
   const size = fs.statSync(pdfPath).size;
   console.log('[PDF] Created:', pdfPath, '(' + size + ' bytes)');
