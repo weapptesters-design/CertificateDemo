@@ -1,6 +1,15 @@
 {
-  "date": "2026-06-04T09:57:31.796Z",
-  "newApps": [],
+  "date": "2026-06-04T10:37:41.801Z",
+  "newApps": [
+    {
+      "key": "com.405",
+      "appName": "test405",
+      "packageName": "com.405",
+      "version": "405v",
+      "startDate": "405 June 2026",
+      "id": "WAT-405CODE-2026"
+    }
+  ],
   "changedApps": [],
   "totalRows": 23
 }
