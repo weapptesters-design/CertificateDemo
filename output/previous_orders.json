@@ -156,7 +156,7 @@
     "appName": "ejhe",
     "packageName": "com.rishy.app63",
     "version": "eh",
-    "startDate": "",
+    "startDate": "02 December  2026",
     "id": "WAT-04DDF-2026"
   },
   "com.rishy.app10": {
@@ -169,10 +169,18 @@
   },
   "google.": {
     "key": "google.",
-    "appName": "2name",
+    "appName": "2name6",
     "packageName": "google.",
     "version": "17",
     "startDate": "02 November 2026",
     "id": "WAT-16-2026"
+  },
+  "com.rishy.app108": {
+    "key": "com.rishy.app108",
+    "appName": "w",
+    "packageName": "com.rishy.app108",
+    "version": "27",
+    "startDate": "01 December 2026",
+    "id": "WAT-H-2026"
   }
 }

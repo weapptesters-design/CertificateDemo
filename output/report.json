@@ -1,15 +1,34 @@
 {
-  "date": "2026-06-04T12:41:47.353Z",
+  "date": "2026-06-04T12:59:11.099Z",
   "newApps": [
     {
-      "key": "google.",
-      "appName": "2name",
-      "packageName": "google.",
-      "version": "17",
-      "startDate": "02 November 2026",
-      "id": "WAT-16-2026"
+      "key": "com.rishy.app108",
+      "appName": "w",
+      "packageName": "com.rishy.app108",
+      "version": "27",
+      "startDate": "01 December 2026",
+      "id": "WAT-H-2026"
     }
   ],
-  "changedApps": [],
-  "totalRows": 28
+  "changedApps": [
+    {
+      "previous": {
+        "key": "com.rishy.app63",
+        "appName": "ejhe",
+        "packageName": "com.rishy.app63",
+        "version": "eh",
+        "startDate": "",
+        "id": "WAT-04DDF-2026"
+      },
+      "current": {
+        "key": "com.rishy.app63",
+        "appName": "ejhe",
+        "packageName": "com.rishy.app63",
+        "version": "eh",
+        "startDate": "02 December  2026",
+        "id": "WAT-04DDF-2026"
+      }
+    }
+  ],
+  "totalRows": 31
 }
