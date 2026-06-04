@@ -182,5 +182,13 @@
     "version": "27",
     "startDate": "01 December 2026",
     "id": "WAT-H-2026"
+  },
+  "com.risy.app108": {
+    "key": "com.risy.app108",
+    "appName": "6",
+    "packageName": "com.risy.app108",
+    "version": "yg",
+    "startDate": "06 December  2026",
+    "id": "WAT-1-2026"
   }
 }
