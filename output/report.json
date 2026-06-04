@@ -1,13 +1,13 @@
 {
-  "date": "2026-06-04T12:28:54.751Z",
+  "date": "2026-06-04T12:41:47.353Z",
   "newApps": [
     {
-      "key": "com.rishy.app10",
-      "appName": "wy",
-      "packageName": "com.rishy.app10",
-      "version": "wy",
-      "startDate": "01 October 2026",
-      "id": "WAT-04WH-2026"
+      "key": "google.",
+      "appName": "2name",
+      "packageName": "google.",
+      "version": "17",
+      "startDate": "02 November 2026",
+      "id": "WAT-16-2026"
     }
   ],
   "changedApps": [],
