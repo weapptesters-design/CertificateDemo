@@ -1,13 +1,13 @@
 {
-  "date": "2026-06-04T05:26:30.780Z",
+  "date": "2026-06-04T05:39:41.100Z",
   "newApps": [
     {
-      "key": "com.testpodai.mobile",
-      "appName": "testpod ai",
-      "packageName": "com.testpodai.mobile",
-      "version": "1.9",
+      "key": "com.mistergroup.app",
+      "appName": "Mister ai",
+      "packageName": "com.mistergroup.app",
+      "version": "1",
       "startDate": "01 June 2026",
-      "id": "WAT-43EA-2026"
+      "id": "WAT-41EA-2026"
     }
   ],
   "changedApps": [
@@ -30,5 +30,5 @@
       }
     }
   ],
-  "totalRows": 11
+  "totalRows": 12
 }

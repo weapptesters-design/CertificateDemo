@@ -78,5 +78,13 @@
     "version": "1.9",
     "startDate": "01 June 2026",
     "id": "WAT-43EA-2026"
+  },
+  "com.mistergroup.app": {
+    "key": "com.mistergroup.app",
+    "appName": "Mister ai",
+    "packageName": "com.mistergroup.app",
+    "version": "1",
+    "startDate": "01 June 2026",
+    "id": "WAT-41EA-2026"
   }
 }
