@@ -106,7 +106,7 @@ html,body{
 #pdf-container{
   width:100%;
   height:100%;
-  background:#fff;
+  background:#FAFAF2;
   border:12px solid #1B5E20;
   border-radius:6px;
   padding:32px 36px 24px;
