@@ -419,7 +419,7 @@ async function main() {
       const jpgPath = path.join(OUTPUT_DIR, jpgName);
       try {
         const jpgBuf = makeJPG(pdfPath, jpgPath);
-        await tgSendPhoto(CHAT_ID, app.appName + ' (Image)', jpgBuf, jpgName);
+      await tgSendPhoto(CHAT_ID, app.appName + '\nRef: ' + ref + '\nPkg: ' + app.packageName + '\nCertificate Image', jpgBuf, jpgName);
         console.log('[OK]', jpgName);
         try { fs.unlinkSync(jpgPath); } catch(_) {}
       } catch(je) {
