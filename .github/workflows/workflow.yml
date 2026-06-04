@@ -1,4 +1,4 @@
-name: WAT Certificate Automation
+0name: WAT Certificate Automation
 
 on:
   schedule:
@@ -29,7 +29,13 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y google-chrome-stable
           google-chrome --version
-
+          
+      - name: Install Ghostscript
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ghostscript
+          gs --version
+          
       - name: Prepare output directory & restore state
         run: |
           mkdir -p output
