@@ -54,5 +54,13 @@
     "version": "5",
     "startDate": "04 June 2026",
     "id": "WAT-51EA-2026"
+  },
+  "com.aadutya": {
+    "key": "com.aadutya",
+    "appName": "test2222",
+    "packageName": "com.aadutya",
+    "version": "2",
+    "startDate": "06 June 2026",
+    "id": "WAT-54EA-2026"
   }
 }
