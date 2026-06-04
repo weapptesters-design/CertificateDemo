@@ -1,0 +1,78 @@
+name: WAT Certificate Automation
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  generate-and-send:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Google Chrome
+        run: |
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+          sudo apt-get update -y
+          sudo apt-get install -y google-chrome-stable ghostscript
+          google-chrome --version
+
+      - name: Prepare output directory & restore state
+        run: |
+          mkdir -p output
+          # If previous_orders.json exists in repo, it's already checked out
+          if [ -f "output/previous_orders.json" ]; then
+            echo "[STATE] Found previous_orders.json in repo:"
+            cat output/previous_orders.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'  {len(d)} entries: {list(d.keys())[:5]}')"
+          else
+            echo "[STATE] No previous_orders.json found — first run"
+          fi
+
+      - name: Process CSV & Detect Changes
+        env:
+          SHEETS_CSV_URL: ${{ secrets.SHEETS_CSV_URL }}
+        run: |
+          echo "=== Running generate.js ==="
+          node generate.js
+          echo "--- report.json ---"
+          cat output/report.json
+
+      - name: Commit state BEFORE sending (so it's saved even if TG fails)
+        run: |
+          git config user.name  "WAT Bot"
+          git config user.email "bot@weapptesters.com"
+          git add output/previous_orders.json output/report.json
+          git diff --staged --quiet && echo "No changes to commit" || git commit -m "chore: update state [skip ci]"
+          git push || echo "Push failed (will retry after)"
+
+      - name: Generate PDF Certificates & Send to Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          echo "=== Running create-cert.js ==="
+          node create-cert.js
+
+      - name: Upload artifacts for debugging
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wat-run-${{ github.run_id }}
+          path: |
+            output/report.json
+            output/previous_orders.json
+            output/*.pdf
+          retention-days: 7
