@@ -102,5 +102,13 @@
     "version": "1",
     "startDate": "06 June 2026",
     "id": "WAT-42WB-2026"
+  },
+  "com.nayab.soverign8": {
+    "key": "com.nayab.soverign8",
+    "appName": "Soverign",
+    "packageName": "com.nayab.soverign8",
+    "version": "2",
+    "startDate": "01 July 2026",
+    "id": "WAT-42EA-2026"
   }
 }
