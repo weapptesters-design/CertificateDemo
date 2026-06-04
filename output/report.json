@@ -1,34 +1,15 @@
 {
-  "date": "2026-06-04T09:07:22.271Z",
+  "date": "2026-06-04T09:24:39.897Z",
   "newApps": [
     {
-      "key": "com.com",
-      "appName": "trdtxt",
-      "packageName": "com.com",
-      "version": "8h",
-      "startDate": "01 November 2026",
-      "id": "WAT-4XY-2026"
+      "key": "com.ajajaj",
+      "appName": "Abc",
+      "packageName": "com.ajajaj",
+      "version": "1",
+      "startDate": "02 June 2026",
+      "id": "WAT-ABX1-2026"
     }
   ],
-  "changedApps": [
-    {
-      "previous": {
-        "key": "com.storyrilssaver",
-        "appName": "reel saver",
-        "packageName": "com.storyrilssaver",
-        "version": "7",
-        "startDate": "06 June 2026",
-        "id": "WAT-56EC-2026"
-      },
-      "current": {
-        "key": "com.storyrilssaver",
-        "appName": "Ap namwee",
-        "packageName": "com.storyrilssaver",
-        "version": "1.2",
-        "startDate": "01 June 2026",
-        "id": "WAT-02EA-2026"
-      }
-    }
-  ],
+  "changedApps": [],
   "totalRows": 23
 }
