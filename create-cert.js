@@ -149,7 +149,7 @@ html,body{
     bottom:42px;
     background:#FAFAF2;
       border-radius:6px;
-      padding:30px 40px;
+      padding:34px 44px;
       display:flex;
       flex-direction:column;
       box-sizing:border-box;">
