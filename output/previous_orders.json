@@ -79,13 +79,13 @@
     "startDate": "wh June 2026",
     "id": "WAT-5EST-2026"
   },
-  "com.vortex": {
-    "key": "com.vortex",
+  "com.vortex77z": {
+    "key": "com.vortex77z",
     "appName": "Vortexy",
-    "packageName": "com.vortex",
+    "packageName": "com.vortex77z",
     "version": "1.2",
     "startDate": "01 June 2026",
-    "id": "WAT-04FA-2026"
+    "id": "WAT-04FAZ-2026"
   },
   "com.vortex5afa": {
     "key": "com.vortex5afa",
@@ -206,5 +206,13 @@
     "version": "1.2",
     "startDate": "08 November 2026",
     "id": "WAT-08EC-2026"
+  },
+  "com.dailygeography.triv": {
+    "key": "com.dailygeography.triv",
+    "appName": "Simran",
+    "packageName": "com.dailygeography.triv",
+    "version": "5",
+    "startDate": "05 December 2026",
+    "id": "WAT-F6-2026"
   }
 }
