@@ -28,10 +28,8 @@ function addDays(dateStr, days) {
 }
 
 function makeRefNumber(app) {
-  const prefix = String(app.prefix || 'WAT').trim();
-  const id     = String(app.id || '').trim().toUpperCase();
-  const year   = new Date().getFullYear();
-  return id ? (prefix + '-' + id + '-' + year) : (prefix + '-' + year);
+  // ID column already has full ref like WAT-67V-2026
+  return String(app.id || 'WAT-' + new Date().getFullYear()).trim();
 }
 
 function todayFormatted() {
@@ -57,8 +55,8 @@ function makeCertHTML(app) {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:1123px;height:794px;overflow:hidden;background:#1B5E20;font-family:'DM Sans',sans-serif}
-#pdf-container{width:1123px;height:794px;background:#fff;border:12px solid #1B5E20;border-radius:6px;padding:32px 36px 24px;display:flex;flex-direction:column;position:relative;}
+html,body{width:2246px;height:1548px;overflow:hidden;background:#1B5E20;font-family:'DM Sans',sans-serif}
+#pdf-container{width:2246px;height:1548px;background:#fff;border:12px solid #1B5E20;border-radius:6px;padding:32px 36px 24px;display:flex;flex-direction:column;position:relative;}
 .cert-row{display:flex;border-bottom:1px solid #dcdcdc;padding:7px 15px}
 .cert-row:last-child{border-bottom:none}
 .cert-label{width:35%;font-weight:bold;color:#1a1a1a;font-size:13.5px;text-align:left}
@@ -161,27 +159,12 @@ async function makePDF(html, pdfPath, htmlPath) {
     ' --run-all-compositor-stages-before-draw' +
     ' --print-to-pdf=' + pdfPath +
     ' --print-to-pdf-no-header --no-pdf-header-footer' +
-    ' --paper-width=11.69 --paper-height=8.27',
-    // Note: no file:// — we use stdin via --dump-dom not needed, just file path
-    { timeout: 40000, stdio: 'pipe', env: Object.assign({}, process.env) }
+    ' --paper-width=23.39 --paper-height=16.14' +
+    ' file://' + htmlPath,
+    { timeout: 40000, stdio: 'pipe' }
   );
 
-  // Chrome sometimes needs the URL as last arg
-  if (!fs.existsSync(pdfPath)) {
-    execSync(
-      chrome +
-      ' --headless=new --no-sandbox --disable-setuid-sandbox' +
-      ' --disable-dev-shm-usage --disable-gpu' +
-      ' --virtual-time-budget=8000' +
-      ' --print-to-pdf=' + pdfPath +
-      ' --print-to-pdf-no-header --no-pdf-header-footer' +
-      ' --paper-width=11.69 --paper-height=8.27' +
-      ' "file://' + htmlPath + '"',
-      { timeout: 40000, stdio: 'pipe' }
-    );
-  }
-
-  if (!fs.existsSync(pdfPath)) throw new Error('PDF not created');
+    if (!fs.existsSync(pdfPath)) throw new Error('PDF not created');
   const size = fs.statSync(pdfPath).size;
   console.log('[PDF] Created:', pdfPath, '(' + size + ' bytes)');
   try { fs.unlinkSync(htmlPath); } catch(_){}
