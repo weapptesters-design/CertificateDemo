@@ -343,13 +343,13 @@ function tgSendPhoto(chatId, caption, fileBuffer, fileName) {
     const body = Buffer.concat([
       Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="chat_id"\r\n\r\n' + String(chatId) + '\r\n'),
       Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="caption"\r\n\r\n' + String(caption) + '\r\n'),
-      Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="photo"; filename="' + fileName + '"\r\nContent-Type: image/jpeg\r\n\r\n'),
+      Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="document"; filename="' + fileName + '"\r\nContent-Type: image/jpeg\r\n\r\n'),
       fileBuffer,
       Buffer.from('\r\n--' + boundary + '--\r\n'),
     ]);
     const req = https.request({
       hostname: 'api.telegram.org',
-      path:     '/bot' + BOT_TOKEN + '/sendPhoto',
+      path:     '/bot' + BOT_TOKEN + '/sendDocument',
       method:   'POST',
       headers:  { 'Content-Type': 'multipart/form-data; boundary=' + boundary, 'Content-Length': body.length },
     }, res => {
