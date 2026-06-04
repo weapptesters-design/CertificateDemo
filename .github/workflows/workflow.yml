@@ -30,15 +30,16 @@ jobs:
           sudo apt-get install -y google-chrome-stable
           google-chrome --version
 
-      - name: Create output directory
-        run: mkdir -p output
-
-      - name: Restore state cache
-        uses: actions/cache@v4
-        with:
-          path: output/previous_orders.json
-          key: wat-state-${{ github.ref_name }}
-          restore-keys: wat-state-
+      - name: Prepare output directory & restore state
+        run: |
+          mkdir -p output
+          # If previous_orders.json exists in repo, it's already checked out
+          if [ -f "output/previous_orders.json" ]; then
+            echo "[STATE] Found previous_orders.json in repo:"
+            cat output/previous_orders.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'  {len(d)} entries: {list(d.keys())[:5]}')"
+          else
+            echo "[STATE] No previous_orders.json found — first run"
+          fi
 
       - name: Process CSV & Detect Changes
         env:
@@ -49,6 +50,14 @@ jobs:
           echo "--- report.json ---"
           cat output/report.json
 
+      - name: Commit state BEFORE sending (so it's saved even if TG fails)
+        run: |
+          git config user.name  "WAT Bot"
+          git config user.email "bot@weapptesters.com"
+          git add output/previous_orders.json output/report.json
+          git diff --staged --quiet && echo "No changes to commit" || git commit -m "chore: update state [skip ci]"
+          git push || echo "Push failed (will retry after)"
+
       - name: Generate PDF Certificates & Send to Telegram
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -56,22 +65,6 @@ jobs:
         run: |
           echo "=== Running create-cert.js ==="
           node create-cert.js
-
-      - name: Save state cache
-        uses: actions/cache/save@v4
-        if: always()
-        with:
-          path: output/previous_orders.json
-          key: wat-state-${{ github.ref_name }}-${{ github.run_id }}
-
-      - name: Commit state to repo
-        if: always()
-        run: |
-          git config user.name  "WAT Bot"
-          git config user.email "bot@weapptesters.com"
-          git add output/previous_orders.json output/report.json || true
-          git diff --staged --quiet || git commit -m "chore: update state [skip ci]"
-          git push || echo "Nothing to push"
 
       - name: Upload artifacts for debugging
         if: always()
