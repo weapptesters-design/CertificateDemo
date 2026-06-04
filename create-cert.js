@@ -143,10 +143,7 @@ html,body{
 
     <div style="
       position:absolute;
-     top:36px;
-     left:36px;
-    right:36px;
-    bottom:42px;
+     inset:36px;
     background:#FAFAF2;
       border-radius:6px;
       padding:34px 44px;
