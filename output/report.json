@@ -1,31 +1,15 @@
 {
-  "date": "2026-06-04T12:04:12.886Z",
+  "date": "2026-06-04T12:09:04.226Z",
   "newApps": [
     {
-      "key": "com.rishy.app3",
-      "appName": "fff1",
-      "packageName": "com.rishy.app3",
-      "version": "1",
-      "startDate": "01 October 2026",
-      "id": "WAT-01FF-2026"
-    },
-    {
-      "key": "com.rishy.app4",
-      "appName": "fff2",
-      "packageName": "com.rishy.app4",
-      "version": "2",
-      "startDate": "02 November 2026",
-      "id": "WAT-02FF-2026"
-    },
-    {
-      "key": "com.rishy.app6",
-      "appName": "fff3",
-      "packageName": "com.rishy.app6",
-      "version": "3",
-      "startDate": "03 December 2026",
-      "id": "WAT-03FF-2026"
+      "key": "com.rishy.app63",
+      "appName": "ejhe",
+      "packageName": "com.rishy.app63",
+      "version": "eh",
+      "startDate": "",
+      "id": "WAT-04DDF-2026"
     }
   ],
   "changedApps": [],
-  "totalRows": 23
+  "totalRows": 28
 }
