@@ -127,24 +127,27 @@ html,body{
 
     <div style="
       position:absolute;
-      inset:18px;
-      border:4px solid #C9A84C;
+      inset:14px;
+      border:5px solid #C9A84C;
       border-radius:12px;
       pointer-events:none;">
     </div>
 
     <div style="
       position:absolute;
-      inset:26px;
-      border:1.5px solid #C9A84C;
+      inset:23px;
+      border:2px solid #C9A84C;
       border-radius:8px;
       pointer-events:none;">
     </div>
 
     <div style="
       position:absolute;
-      inset:36px;
-      background:#FAFAF2;
+     top:36px;
+     left:36px;
+    right:36px;
+    bottom:42px;
+    background:#FAFAF2;
       border-radius:6px;
       padding:30px 40px;
       display:flex;
@@ -192,7 +195,7 @@ html,body{
     During the testing period, the application was installed and used by multiple testers across different Android devices. Testers evaluated installation flow, basic functionality, usability, and overall app performance while providing feedback during the testing period.
   </p>
 
-  <div style="flex-grow:1;min-height:15px;"></div>
+  <div style="flex-grow:1;min-height:28px;"></div>
 
   <div style="position:relative;width:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:5px;flex-shrink:0;">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;padding-right:170px;">
@@ -212,7 +215,7 @@ html,body{
         <div style="font-size:13px;color:#1a1a1a;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Testing Manager</div>
       </div>
     </div>
-    <img src="${SEAL_URL}" alt="Verified Badge" style="position:absolute;bottom:8px;right:0px;width:140px;height:140px;object-fit:contain;z-index:10;">
+    <img src="${SEAL_URL}" alt="Verified Badge" style="position:absolute;bottom:8px;right:0px;width:150px;height:150px;object-fit:contain;z-index:10;">
   </div>
 
   <div style="margin-top:16px;font-size:13.5px;color:#444;text-align:left;line-height:1.6;border-top:1px solid #e0e0e0;flex-shrink:0;display:flex;align-items:flex-start;gap:8px;background:rgba(0,0,0,0.02);padding:14px 16px;border-radius:6px;">
