@@ -95,7 +95,7 @@ function makeCertHTML(app) {
 
 html,body{
   width:297mm;
-  height:210mm;
+  height:210.5mm;
   margin:0;
   padding:0;
   overflow:hidden;
