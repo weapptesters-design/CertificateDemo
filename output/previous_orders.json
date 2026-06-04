@@ -70,5 +70,13 @@
     "version": "425",
     "startDate": "425 June 2026",
     "id": "WAT-425-2026"
+  },
+  "com.4239": {
+    "key": "com.4239",
+    "appName": "whw",
+    "packageName": "com.4239",
+    "version": "hw",
+    "startDate": "wh June 2026",
+    "id": "WAT-5EST-2026"
   }
 }
