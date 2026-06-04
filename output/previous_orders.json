@@ -87,13 +87,13 @@
     "startDate": "01 June 2026",
     "id": "WAT-41EA-2026"
   },
-  "h": {
-    "key": "h",
+  "com.seafarerdoc.octotik7272": {
+    "key": "com.seafarerdoc.octotik7272",
     "appName": "h",
-    "packageName": "",
+    "packageName": "com.seafarerdoc.octotik7272",
     "version": "j",
-    "startDate": "",
-    "id": ""
+    "startDate": "33 January  2026",
+    "id": "WAT-H-2026"
   },
   "com.lindonjohns.fullfinancas": {
     "key": "com.lindonjohns.fullfinancas",
@@ -118,5 +118,13 @@
     "version": "1",
     "startDate": "01 August 2026",
     "id": "WAT-03FC-2026"
+  },
+  "com.seafarerdoc.octotik": {
+    "key": "com.seafarerdoc.octotik",
+    "appName": "Testing namw",
+    "packageName": "com.seafarerdoc.octotik",
+    "version": "1",
+    "startDate": "01 September 2026",
+    "id": "WAT-399FF-2026"
   }
 }
