@@ -86,5 +86,21 @@
     "version": "1",
     "startDate": "01 June 2026",
     "id": "WAT-41EA-2026"
+  },
+  "h": {
+    "key": "h",
+    "appName": "h",
+    "packageName": "",
+    "version": "j",
+    "startDate": "",
+    "id": ""
+  },
+  "com.lindonjohns.fullfinancas": {
+    "key": "com.lindonjohns.fullfinancas",
+    "appName": "Ful Bifinance",
+    "packageName": "com.lindonjohns.fullfinancas",
+    "version": "1",
+    "startDate": "06 June 2026",
+    "id": "WAT-42WB-2026"
   }
 }
