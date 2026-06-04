@@ -1,8 +1,3 @@
-/**
- * create-cert.js — We App Testers
- * Exact same certificate as manual tool
- */
-
 const fs    = require('fs');
 const path  = require('path');
 const https = require('https');
@@ -10,31 +5,12 @@ const { execSync } = require('child_process');
 
 const OUTPUT_DIR  = path.join(__dirname, 'output');
 const REPORT_FILE = path.join(OUTPUT_DIR, 'report.json');
-const ASSETS_FILE = path.join(__dirname, 'assets.js');
 const BOT_TOKEN   = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID     = process.env.TELEGRAM_CHAT_ID;
 
-// ─── LOAD ASSETS (logo + seal base64 from assets.js) ─────────────────────────
-function loadAssets() {
-  if (!fs.existsSync(ASSETS_FILE)) {
-    console.log('[ASSETS] assets.js not found, images will be missing');
-    return { logo: '', seal: '' };
-  }
-  try {
-    // assets.js sets window.APP_ASSETS = { logo: '...', seal: '...' }
-    // We eval it in a fake window context
-    const code = fs.readFileSync(ASSETS_FILE, 'utf8');
-    const fakeWindow = {};
-    const fn = new Function('window', code);
-    fn(fakeWindow);
-    const assets = fakeWindow.APP_ASSETS || {};
-    console.log('[ASSETS] Loaded. Logo:', !!assets.logo, '| Seal:', !!assets.seal);
-    return assets;
-  } catch(e) {
-    console.error('[ASSETS] Failed to load:', e.message);
-    return { logo: '', seal: '' };
-  }
-}
+// Image URLs from assets.js
+const LOGO_URL = 'https://i.ibb.co/bM7b6WSn/Icon-comp.png';
+const SEAL_URL = 'https://i.ibb.co/SXRYz54d/Badge-comp.png';
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
 function formatDate(dateStr) {
@@ -51,34 +27,27 @@ function addDays(dateStr, days) {
   return d.toISOString().split('T')[0];
 }
 
-// Naming: WAT-{ID}-{YEAR}  (prefix from CSV or 'WAT', id from CSV)
 function makeRefNumber(app) {
   const prefix = String(app.prefix || 'WAT').trim();
   const id     = String(app.id || '').trim().toUpperCase();
   const year   = new Date().getFullYear();
-  if (id) return prefix + '-' + id + '-' + year;
-  return prefix + '-' + year;
+  return id ? (prefix + '-' + id + '-' + year) : (prefix + '-' + year);
 }
 
 function todayFormatted() {
   return new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
 }
 
-// ─── CERTIFICATE HTML (exact copy of your manual tool template) ───────────────
-function makeCertHTML(app, assets) {
-  const ref     = makeRefNumber(app);
-  const start   = app.startDate || new Date().toISOString().split('T')[0];
-  const end     = addDays(start, 14);
-  const period  = formatDate(start) + ' \u2013 ' + formatDate(end);
-  const issued  = todayFormatted();
+// ─── CERTIFICATE HTML (exact match to your manual tool) ──────────────────────
+function makeCertHTML(app) {
+  const ref    = makeRefNumber(app);
+  const start  = app.startDate || new Date().toISOString().split('T')[0];
+  const end    = addDays(start, 14);
+  const period = formatDate(start) + ' \u2013 ' + formatDate(end);
+  const issued = todayFormatted();
   const appName = String(app.appName     || 'Unknown App');
   const pkg     = String(app.packageName || '--');
   const ver     = String(app.version     || '--');
-
-  const logoSrc   = assets.logo ? 'data:image/png;base64,' + assets.logo : '';
-  const sealSrc   = assets.seal ? 'data:image/png;base64,' + assets.seal : '';
-  const logoTag   = logoSrc ? `<img src="${logoSrc}" style="width:70px;height:70px;object-fit:contain;">` : '';
-  const sealTag   = sealSrc ? `<img src="${sealSrc}" alt="Verified Badge" style="position:absolute;bottom:8px;right:0px;width:140px;height:140px;object-fit:contain;z-index:10;">` : '';
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -89,12 +58,7 @@ function makeCertHTML(app, assets) {
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1123px;height:794px;overflow:hidden;background:#1B5E20;font-family:'DM Sans',sans-serif}
-#pdf-container{
-  width:1123px;height:794px;background:#fff;
-  border:12px solid #1B5E20;border-radius:6px;
-  padding:32px 36px 24px;
-  display:flex;flex-direction:column;position:relative;
-}
+#pdf-container{width:1123px;height:794px;background:#fff;border:12px solid #1B5E20;border-radius:6px;padding:32px 36px 24px;display:flex;flex-direction:column;position:relative;}
 .cert-row{display:flex;border-bottom:1px solid #dcdcdc;padding:7px 15px}
 .cert-row:last-child{border-bottom:none}
 .cert-label{width:35%;font-weight:bold;color:#1a1a1a;font-size:13.5px;text-align:left}
@@ -104,10 +68,9 @@ html,body{width:1123px;height:794px;overflow:hidden;background:#1B5E20;font-fami
 <body>
 <div id="pdf-container">
 
-  <!-- Header: Logo + Brand + Ref -->
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:15px;flex-shrink:0;">
     <div style="display:flex;align-items:center;gap:15px;">
-      ${logoTag}
+      <img src="${LOGO_URL}" style="width:70px;height:70px;object-fit:contain;">
       <div>
         <div style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:800;color:#1a1464;letter-spacing:1px;">WE <span style="color:#4CAF50;">APP</span> TESTERS</div>
         <div style="font-size:14px;color:#707070;text-align:left;font-weight:600;">Android Testing Experts</div>
@@ -121,7 +84,6 @@ html,body{width:1123px;height:794px;overflow:hidden;background:#1B5E20;font-fami
 
   <div style="height:1.5px;background:#dcdcdc;margin-bottom:12px;flex-shrink:0;"></div>
 
-  <!-- Title -->
   <div style="text-align:center;margin-bottom:12px;flex-shrink:0;">
     <div style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:800;color:#1a1a1a;">APP TESTING COMPLETION CERTIFICATE</div>
     <div style="font-size:14px;color:#666;font-weight:600;letter-spacing:1px;margin-top:4px;">CERTIFICATE OF TESTING</div>
@@ -132,7 +94,6 @@ html,body{width:1123px;height:794px;overflow:hidden;background:#1B5E20;font-fami
     This is to certify that the Android application listed below has successfully completed a structured testing process conducted by We App Testers.
   </p>
 
-  <!-- Data Table -->
   <div style="width:100%;border:1px solid #dcdcdc;border-radius:8px;overflow:hidden;margin-bottom:15px;flex-shrink:0;">
     <div class="cert-row" style="background:#E8F0E6;"><div class="cert-label">App Name:</div><div class="cert-value" style="font-weight:bold;color:#1a1a1a;">${appName}</div></div>
     <div class="cert-row" style="background:#F5F8F4;"><div class="cert-label">Package Name:</div><div class="cert-value">${pkg}</div></div>
@@ -148,7 +109,6 @@ html,body{width:1123px;height:794px;overflow:hidden;background:#1B5E20;font-fami
 
   <div style="flex-grow:1;min-height:15px;"></div>
 
-  <!-- Footer -->
   <div style="position:relative;width:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:5px;flex-shrink:0;">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;padding-right:170px;">
       <div style="text-align:left;display:flex;flex-direction:column;gap:3px;">
@@ -167,10 +127,9 @@ html,body{width:1123px;height:794px;overflow:hidden;background:#1B5E20;font-fami
         <div style="font-size:13px;color:#1a1a1a;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Testing Manager</div>
       </div>
     </div>
-    ${sealTag}
+    <img src="${SEAL_URL}" alt="Verified Badge" style="position:absolute;bottom:8px;right:0px;width:140px;height:140px;object-fit:contain;z-index:10;">
   </div>
 
-  <!-- Disclaimer -->
   <div style="margin-top:16px;font-size:13.5px;color:#444;text-align:left;line-height:1.6;border-top:1px solid #e0e0e0;flex-shrink:0;display:flex;align-items:flex-start;gap:8px;background:rgba(0,0,0,0.02);padding:14px 16px;border-radius:6px;">
     <div style="font-weight:800;font-size:14px;color:#1a1464;letter-spacing:0.5px;">DISCLAIMER:</div>
     <div style="flex:1;">This certificate confirms ONLY that the specified application version was tested during the stated period by <strong>We App Testers</strong>. Any subsequent updates, modifications, or newly released versions fall outside the scope of this evaluation.</div>
@@ -185,21 +144,15 @@ html,body{width:1123px;height:794px;overflow:hidden;background:#1B5E20;font-fami
 async function makePDF(html, pdfPath, htmlPath) {
   fs.writeFileSync(htmlPath, html, 'utf8');
 
-  const candidates = [
-    '/usr/bin/google-chrome-stable',
-    '/usr/bin/google-chrome',
-    '/usr/bin/chromium-browser',
-    '/usr/bin/chromium',
-  ];
+  const candidates = ['/usr/bin/google-chrome-stable', '/usr/bin/google-chrome', '/usr/bin/chromium-browser', '/usr/bin/chromium'];
   let chrome = null;
   for (const c of candidates) { if (fs.existsSync(c)) { chrome = c; break; } }
   if (!chrome) {
-    try { chrome = execSync('which google-chrome-stable || which google-chrome || which chromium', { encoding: 'utf8' }).trim().split('\n')[0]; } catch(_){}
+    try { chrome = execSync('which google-chrome-stable || which google-chrome', { encoding: 'utf8' }).trim().split('\n')[0]; } catch(_){}
   }
   if (!chrome) throw new Error('Chrome not found');
   console.log('[PDF] Chrome:', chrome);
 
-  // --virtual-time-budget gives fonts/images time to load before render
   execSync(
     chrome +
     ' --headless=new --no-sandbox --disable-setuid-sandbox' +
@@ -207,16 +160,30 @@ async function makePDF(html, pdfPath, htmlPath) {
     ' --virtual-time-budget=8000' +
     ' --run-all-compositor-stages-before-draw' +
     ' --print-to-pdf=' + pdfPath +
-    ' --print-to-pdf-no-header' +
-    ' --no-pdf-header-footer' +
-    ' --paper-width=11.69 --paper-height=8.27' +
-    ' file://' + htmlPath,
-    { timeout: 40000, stdio: 'pipe' }
+    ' --print-to-pdf-no-header --no-pdf-header-footer' +
+    ' --paper-width=11.69 --paper-height=8.27',
+    // Note: no file:// — we use stdin via --dump-dom not needed, just file path
+    { timeout: 40000, stdio: 'pipe', env: Object.assign({}, process.env) }
   );
+
+  // Chrome sometimes needs the URL as last arg
+  if (!fs.existsSync(pdfPath)) {
+    execSync(
+      chrome +
+      ' --headless=new --no-sandbox --disable-setuid-sandbox' +
+      ' --disable-dev-shm-usage --disable-gpu' +
+      ' --virtual-time-budget=8000' +
+      ' --print-to-pdf=' + pdfPath +
+      ' --print-to-pdf-no-header --no-pdf-header-footer' +
+      ' --paper-width=11.69 --paper-height=8.27' +
+      ' "file://' + htmlPath + '"',
+      { timeout: 40000, stdio: 'pipe' }
+    );
+  }
 
   if (!fs.existsSync(pdfPath)) throw new Error('PDF not created');
   const size = fs.statSync(pdfPath).size;
-  console.log('[PDF] Created:', pdfPath, size, 'bytes');
+  console.log('[PDF] Created:', pdfPath, '(' + size + ' bytes)');
   try { fs.unlinkSync(htmlPath); } catch(_){}
   return fs.readFileSync(pdfPath);
 }
@@ -234,7 +201,7 @@ function tgPost(method, jsonBody) {
       let raw = '';
       res.on('data', c => raw += c);
       res.on('end', () => {
-        console.log('[TG]', method, res.statusCode, raw.slice(0, 200));
+        console.log('[TG]', method, res.statusCode, raw.slice(0, 300));
         try {
           const p = JSON.parse(raw);
           p.ok ? resolve(p) : reject(new Error(p.description || 'TG error'));
@@ -250,14 +217,13 @@ function tgPost(method, jsonBody) {
 function tgSendFile(chatId, caption, fileBuffer, fileName) {
   return new Promise((resolve, reject) => {
     const boundary = 'WAT' + Date.now();
-    const parts = [
+    const body = Buffer.concat([
       Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="chat_id"\r\n\r\n' + String(chatId) + '\r\n'),
       Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="caption"\r\n\r\n' + String(caption) + '\r\n'),
       Buffer.from('--' + boundary + '\r\nContent-Disposition: form-data; name="document"; filename="' + fileName + '"\r\nContent-Type: application/pdf\r\n\r\n'),
       fileBuffer,
       Buffer.from('\r\n--' + boundary + '--\r\n'),
-    ];
-    const body = Buffer.concat(parts);
+    ]);
     const req = https.request({
       hostname: 'api.telegram.org',
       path:     '/bot' + BOT_TOKEN + '/sendDocument',
@@ -267,7 +233,7 @@ function tgSendFile(chatId, caption, fileBuffer, fileName) {
       let raw = '';
       res.on('data', c => raw += c);
       res.on('end', () => {
-        console.log('[TG] sendDocument', res.statusCode, raw.slice(0, 200));
+        console.log('[TG] sendDocument', res.statusCode, raw.slice(0, 300));
         try {
           const p = JSON.parse(raw);
           p.ok ? resolve(p) : reject(new Error(p.description || 'TG error'));
@@ -280,10 +246,6 @@ function tgSendFile(chatId, caption, fileBuffer, fileName) {
   });
 }
 
-async function tgSend(chatId, text) {
-  return tgPost('sendMessage', { chat_id: chatId, text: text });
-}
-
 // ─── MAIN ────────────────────────────────────────────────────────────────────
 async function main() {
   console.log('=== WAT create-cert.js ===');
@@ -292,7 +254,6 @@ async function main() {
   if (!BOT_TOKEN || !CHAT_ID) { console.error('Missing Telegram secrets'); process.exit(1); }
   if (!fs.existsSync(REPORT_FILE)) { console.error('report.json missing'); process.exit(1); }
 
-  const assets  = loadAssets();
   const report  = JSON.parse(fs.readFileSync(REPORT_FILE, 'utf8'));
   const newApps = Array.isArray(report.newApps) ? report.newApps : [];
   const today   = todayFormatted();
@@ -300,13 +261,12 @@ async function main() {
   console.log('[REPORT] New:', newApps.length);
 
   if (newApps.length === 0) {
-    await tgSend(CHAT_ID, 'Certificate Report\nDate: ' + today + '\n\nNo new apps today. All systems up to date.');
-    console.log('[DONE] No new apps.');
+    await tgPost('sendMessage', { chat_id: CHAT_ID, text: 'Certificate Report\nDate: ' + today + '\n\nNo new apps today. All systems up to date.' });
     return;
   }
 
   const appList = newApps.map((a, i) => (i+1) + '. ' + a.appName + ' (' + a.packageName + ')').join('\n');
-  await tgSend(CHAT_ID, 'Certificate Report\nDate: ' + today + '\n\n' + newApps.length + ' new app(s) found!\n\n' + appList + '\n\nGenerating PDFs...');
+  await tgPost('sendMessage', { chat_id: CHAT_ID, text: 'Certificate Report\nDate: ' + today + '\n\n' + newApps.length + ' new app(s) found!\n\n' + appList + '\n\nGenerating PDFs...' });
 
   let ok = 0, fail = 0;
 
@@ -321,10 +281,9 @@ async function main() {
     console.log('\n[' + (i+1) + '/' + newApps.length + ']', app.appName, '| Ref:', ref);
 
     try {
-      const html   = makeCertHTML(app, assets);
+      const html   = makeCertHTML(app);
       const pdfBuf = await makePDF(html, pdfPath, htmlPath);
-      const caption = app.appName + '\nRef: ' + ref + '\nPkg: ' + app.packageName;
-      await tgSendFile(CHAT_ID, caption, pdfBuf, pdfName);
+      await tgSendFile(CHAT_ID, app.appName + '\nRef: ' + ref + '\nPkg: ' + app.packageName, pdfBuf, pdfName);
       console.log('[OK]', pdfName);
       ok++;
     } catch(e) {
@@ -332,19 +291,18 @@ async function main() {
       fail++;
     }
 
-    // 5 second gap between each certificate (fonts/images load time)
     if (i < newApps.length - 1) {
-      console.log('[WAIT] 5 seconds before next cert...');
+      console.log('[WAIT] 5s before next...');
       await new Promise(r => setTimeout(r, 5000));
     }
   }
 
-  await tgSend(CHAT_ID, 'Done!\nPDFs sent: ' + ok + '/' + newApps.length + (fail > 0 ? '\nFailed: ' + fail : ''));
+  await tgPost('sendMessage', { chat_id: CHAT_ID, text: 'Done!\nPDFs sent: ' + ok + '/' + newApps.length + (fail > 0 ? '\nFailed: ' + fail : '') });
   console.log('=== DONE | OK:', ok, '| Failed:', fail, '===');
 }
 
 main().catch(e => {
   console.error('[FATAL]', e.message);
-  if (BOT_TOKEN && CHAT_ID) tgSend(CHAT_ID, 'WAT Error: ' + e.message).catch(()=>{});
+  if (BOT_TOKEN && CHAT_ID) tgPost('sendMessage', { chat_id: CHAT_ID, text: 'WAT Error: ' + e.message }).catch(()=>{});
   process.exit(1);
 });
