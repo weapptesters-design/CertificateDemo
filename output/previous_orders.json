@@ -70,5 +70,13 @@
     "version": "u8",
     "startDate": "07 June 2026",
     "id": "WAT-57EC-2026"
+  },
+  "com.testpodai.mobile": {
+    "key": "com.testpodai.mobile",
+    "appName": "testpod ai",
+    "packageName": "com.testpodai.mobile",
+    "version": "1.9",
+    "startDate": "01 June 2026",
+    "id": "WAT-43EA-2026"
   }
 }

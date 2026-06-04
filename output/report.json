@@ -1,13 +1,13 @@
 {
-  "date": "2026-06-04T05:21:33.335Z",
+  "date": "2026-06-04T05:26:30.780Z",
   "newApps": [
     {
-      "key": "com.tesrrrrrrr",
-      "appName": "trdtttt",
-      "packageName": "com.tesrrrrrrr",
-      "version": "u8",
-      "startDate": "07 June 2026",
-      "id": "WAT-57EC-2026"
+      "key": "com.testpodai.mobile",
+      "appName": "testpod ai",
+      "packageName": "com.testpodai.mobile",
+      "version": "1.9",
+      "startDate": "01 June 2026",
+      "id": "WAT-43EA-2026"
     }
   ],
   "changedApps": [
@@ -30,5 +30,5 @@
       }
     }
   ],
-  "totalRows": 10
+  "totalRows": 11
 }
