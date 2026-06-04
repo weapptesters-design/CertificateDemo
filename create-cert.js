@@ -55,8 +55,8 @@ function makeCertHTML(app) {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:2246px;height:1548px;overflow:hidden;background:#1B5E20;font-family:'DM Sans',sans-serif}
-#pdf-container{width:2246px;height:1548px;background:#fff;border:12px solid #1B5E20;border-radius:6px;padding:32px 36px 24px;display:flex;flex-direction:column;position:relative;}
+html,body{width:1123px;height:794px;overflow:hidden;background:#1B5E20;font-family:'DM Sans',sans-serif}
+#pdf-container{width:1123px;height:794px;background:#fff;border:12px solid #1B5E20;border-radius:6px;padding:32px 36px 24px;display:flex;flex-direction:column;position:relative;}
 .cert-row{display:flex;border-bottom:1px solid #dcdcdc;padding:7px 15px}
 .cert-row:last-child{border-bottom:none}
 .cert-label{width:35%;font-weight:bold;color:#1a1a1a;font-size:13.5px;text-align:left}
@@ -151,15 +151,18 @@ async function makePDF(html, pdfPath, htmlPath) {
   if (!chrome) throw new Error('Chrome not found');
   console.log('[PDF] Chrome:', chrome);
 
+  // Use Chrome to screenshot at 2x scale then save as PDF
+  // Viewport = 1123x794, scale=2 → 2246x1548 image → fit into A4 landscape PDF
   execSync(
     chrome +
     ' --headless=new --no-sandbox --disable-setuid-sandbox' +
     ' --disable-dev-shm-usage --disable-gpu' +
     ' --virtual-time-budget=8000' +
     ' --run-all-compositor-stages-before-draw' +
+    ' --force-device-scale-factor=2' +
     ' --print-to-pdf=' + pdfPath +
     ' --print-to-pdf-no-header --no-pdf-header-footer' +
-    ' --paper-width=23.39 --paper-height=16.14' +
+    ' --paper-width=11.69 --paper-height=8.27' +
     ' file://' + htmlPath,
     { timeout: 40000, stdio: 'pipe' }
   );
