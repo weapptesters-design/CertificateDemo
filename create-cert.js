@@ -243,24 +243,45 @@ async function makePDF(html, pdfPath, htmlPath) {
   if (!chrome) throw new Error('Chrome not found');
   console.log('[PDF] Chrome:', chrome);
 
-  // Use Chrome to screenshot at 2x scale then save as PDF
-  // Viewport = 1123x794, scale=2 → 2246x1548 image → fit into A4 landscape PDF
   execSync(
-  chrome +
-  ' --headless=new --no-sandbox --disable-setuid-sandbox' +
-  ' --disable-dev-shm-usage --disable-gpu' +
-  ' --virtual-time-budget=12000' +
-  ' --run-all-compositor-stages-before-draw' +
-  ' --print-to-pdf=' + pdfPath +
-  ' --print-to-pdf-no-header' +
-  ' --no-pdf-header-footer' +
-  ' --landscape' +
-  ' file://' + htmlPath,
-  { timeout: 40000, stdio: 'pipe' }
-);
-    if (!fs.existsSync(pdfPath)) throw new Error('PDF not created');
-  const size = fs.statSync(pdfPath).size;
-  console.log('[PDF] Created:', pdfPath, '(' + size + ' bytes)');
+    chrome +
+    ' --headless=new --no-sandbox --disable-setuid-sandbox' +
+    ' --disable-dev-shm-usage --disable-gpu' +
+    ' --virtual-time-budget=12000' +
+    ' --run-all-compositor-stages-before-draw' +
+    ' --print-to-pdf=' + pdfPath +
+    ' --print-to-pdf-no-header --no-pdf-header-footer' +
+    ' --landscape' +
+    ' file://' + htmlPath,
+    { timeout: 40000, stdio: 'pipe' }
+  );
+
+  if (!fs.existsSync(pdfPath)) throw new Error('PDF not created');
+  console.log('[PDF] Raw size:', fs.statSync(pdfPath).size, 'bytes');
+
+  // Compress with Ghostscript (pre-installed on ubuntu-latest)
+  const compressedPath = pdfPath.replace('.pdf', '_c.pdf');
+  try {
+    execSync(
+      'gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4' +
+      ' -dPDFSETTINGS=/ebook' +
+      ' -dNOPAUSE -dQUIET -dBATCH' +
+      ' -sOutputFile=' + compressedPath + ' ' + pdfPath,
+      { timeout: 30000, stdio: 'pipe' }
+    );
+    if (fs.existsSync(compressedPath)) {
+      const orig = fs.statSync(pdfPath).size;
+      const comp = fs.statSync(compressedPath).size;
+      console.log('[PDF] Compressed:', orig, '→', comp, 'bytes (' + Math.round((1-comp/orig)*100) + '% smaller)');
+      fs.unlinkSync(pdfPath);
+      fs.renameSync(compressedPath, pdfPath);
+    }
+  } catch(e) {
+    console.log('[PDF] Ghostscript unavailable:', e.message.slice(0,60));
+  }
+
+  const finalSize = fs.statSync(pdfPath).size;
+  console.log('[PDF] Final:', finalSize, 'bytes');
   try { fs.unlinkSync(htmlPath); } catch(_){}
   return fs.readFileSync(pdfPath);
 }
