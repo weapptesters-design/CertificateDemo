@@ -1,25 +1,34 @@
 {
-  "date": "2026-06-04T05:18:27.593Z",
-  "newApps": [],
+  "date": "2026-06-04T05:21:33.335Z",
+  "newApps": [
+    {
+      "key": "com.tesrrrrrrr",
+      "appName": "trdtttt",
+      "packageName": "com.tesrrrrrrr",
+      "version": "u8",
+      "startDate": "07 June 2026",
+      "id": "WAT-57EC-2026"
+    }
+  ],
   "changedApps": [
     {
       "previous": {
-        "key": "com.storyrilssaver",
-        "appName": "Ap namwee",
-        "packageName": "com.storyrilssaver",
-        "version": "1.2",
-        "startDate": "01 June 2026",
-        "id": "WAT-02EA-2026"
-      },
-      "current": {
         "key": "com.storyrilssaver",
         "appName": "reel saver",
         "packageName": "com.storyrilssaver",
         "version": "7",
         "startDate": "06 June 2026",
         "id": "WAT-56EC-2026"
+      },
+      "current": {
+        "key": "com.storyrilssaver",
+        "appName": "Ap namwee",
+        "packageName": "com.storyrilssaver",
+        "version": "1.2",
+        "startDate": "01 June 2026",
+        "id": "WAT-02EA-2026"
       }
     }
   ],
-  "totalRows": 9
+  "totalRows": 10
 }
