@@ -62,5 +62,13 @@
     "version": "420v",
     "startDate": "420 June 2026",
     "id": "WAT-420-2026"
+  },
+  "com.425": {
+    "key": "com.425",
+    "appName": "test425",
+    "packageName": "com.425",
+    "version": "425",
+    "startDate": "425 June 2026",
+    "id": "WAT-425-2026"
   }
 }

@@ -1,13 +1,13 @@
 {
-  "date": "2026-06-04T10:51:36.291Z",
+  "date": "2026-06-04T10:57:42.241Z",
   "newApps": [
     {
-      "key": "com.420",
-      "appName": "test420",
-      "packageName": "com.420",
-      "version": "420v",
-      "startDate": "420 June 2026",
-      "id": "WAT-420-2026"
+      "key": "com.425",
+      "appName": "test425",
+      "packageName": "com.425",
+      "version": "425",
+      "startDate": "425 June 2026",
+      "id": "WAT-425-2026"
     }
   ],
   "changedApps": [],
