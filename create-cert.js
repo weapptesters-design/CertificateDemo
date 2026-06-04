@@ -123,6 +123,36 @@ html,body{
 <body>
 <div id="pdf-container">
 
+  <div style="position:absolute;inset:0;background:#1B5E20;">
+
+    <div style="
+      position:absolute;
+      inset:18px;
+      border:4px solid #C9A84C;
+      border-radius:12px;
+      pointer-events:none;">
+    </div>
+
+    <div style="
+      position:absolute;
+      inset:26px;
+      border:1.5px solid #C9A84C;
+      border-radius:8px;
+      pointer-events:none;">
+    </div>
+
+    <div style="
+      position:absolute;
+      inset:36px;
+      background:#FAFAF2;
+      border-radius:6px;
+      padding:30px 40px;
+      display:flex;
+      flex-direction:column;
+      box-sizing:border-box;">
+
+      <!-- Header -->
+    
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:15px;flex-shrink:0;">
     <div style="display:flex;align-items:center;gap:15px;">
       <img src="${LOGO_URL}" style="width:70px;height:70px;object-fit:contain;">
