@@ -190,5 +190,13 @@
     "version": "yg",
     "startDate": "06 December  2026",
     "id": "WAT-1-2026"
+  },
+  "com.risy.28": {
+    "key": "com.risy.28",
+    "appName": "ws",
+    "packageName": "com.risy.28",
+    "version": "w",
+    "startDate": "02 October 2026",
+    "id": "WAT-2GW-2026"
   }
 }
