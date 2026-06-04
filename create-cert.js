@@ -192,7 +192,7 @@ html,body{
     During the testing period, the application was installed and used by multiple testers across different Android devices. Testers evaluated installation flow, basic functionality, usability, and overall app performance while providing feedback during the testing period.
   </p>
 
-  <div style="flex-grow:1;min-height:28px;"></div>
+  <div style="flex-grow:1;min-height:15px;"></div>
 
   <div style="position:relative;width:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:5px;flex-shrink:0;">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;padding-right:170px;">
