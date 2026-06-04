@@ -1,13 +1,13 @@
 {
-  "date": "2026-06-04T08:55:07.257Z",
+  "date": "2026-06-04T09:07:22.271Z",
   "newApps": [
     {
-      "key": "com.seafarerdoc.octotik&test",
-      "appName": "test196",
-      "packageName": "com.seafarerdoc.octotik&test",
-      "version": "1.3j",
-      "startDate": "01 October 2026",
-      "id": "WAT-196GF-2026"
+      "key": "com.com",
+      "appName": "trdtxt",
+      "packageName": "com.com",
+      "version": "8h",
+      "startDate": "01 November 2026",
+      "id": "WAT-4XY-2026"
     }
   ],
   "changedApps": [
@@ -27,24 +27,6 @@
         "version": "1.2",
         "startDate": "01 June 2026",
         "id": "WAT-02EA-2026"
-      }
-    },
-    {
-      "previous": {
-        "key": "com.seafarerdoc.octotik7272",
-        "appName": "h",
-        "packageName": "com.seafarerdoc.octotik7272",
-        "version": "j",
-        "startDate": "33 January  2026",
-        "id": "WAT-H-2026"
-      },
-      "current": {
-        "key": "com.seafarerdoc.octotik7272",
-        "appName": "h",
-        "packageName": "com.seafarerdoc.octotik7272",
-        "version": "j",
-        "startDate": "01 January  2026",
-        "id": "WAT-H-2026"
       }
     }
   ],
