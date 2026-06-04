@@ -1,21 +1,13 @@
 {
-  "date": "2026-06-04T08:34:22.292Z",
+  "date": "2026-06-04T08:55:07.257Z",
   "newApps": [
     {
-      "key": "com.seafarerdoc.octotik7272",
-      "appName": "h",
-      "packageName": "com.seafarerdoc.octotik7272",
-      "version": "j",
-      "startDate": "33 January  2026",
-      "id": "WAT-H-2026"
-    },
-    {
-      "key": "com.seafarerdoc.octotik",
-      "appName": "Testing namw",
-      "packageName": "com.seafarerdoc.octotik",
-      "version": "1",
-      "startDate": "01 September 2026",
-      "id": "WAT-399FF-2026"
+      "key": "com.seafarerdoc.octotik&test",
+      "appName": "test196",
+      "packageName": "com.seafarerdoc.octotik&test",
+      "version": "1.3j",
+      "startDate": "01 October 2026",
+      "id": "WAT-196GF-2026"
     }
   ],
   "changedApps": [
@@ -35,6 +27,24 @@
         "version": "1.2",
         "startDate": "01 June 2026",
         "id": "WAT-02EA-2026"
+      }
+    },
+    {
+      "previous": {
+        "key": "com.seafarerdoc.octotik7272",
+        "appName": "h",
+        "packageName": "com.seafarerdoc.octotik7272",
+        "version": "j",
+        "startDate": "33 January  2026",
+        "id": "WAT-H-2026"
+      },
+      "current": {
+        "key": "com.seafarerdoc.octotik7272",
+        "appName": "h",
+        "packageName": "com.seafarerdoc.octotik7272",
+        "version": "j",
+        "startDate": "01 January  2026",
+        "id": "WAT-H-2026"
       }
     }
   ],

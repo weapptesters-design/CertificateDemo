@@ -92,7 +92,7 @@
     "appName": "h",
     "packageName": "com.seafarerdoc.octotik7272",
     "version": "j",
-    "startDate": "33 January  2026",
+    "startDate": "01 January  2026",
     "id": "WAT-H-2026"
   },
   "com.lindonjohns.fullfinancas": {
@@ -126,5 +126,13 @@
     "version": "1",
     "startDate": "01 September 2026",
     "id": "WAT-399FF-2026"
+  },
+  "com.seafarerdoc.octotik&test": {
+    "key": "com.seafarerdoc.octotik&test",
+    "appName": "test196",
+    "packageName": "com.seafarerdoc.octotik&test",
+    "version": "1.3j",
+    "startDate": "01 October 2026",
+    "id": "WAT-196GF-2026"
   }
 }
