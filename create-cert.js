@@ -326,7 +326,7 @@ function tgSendFile(chatId, caption, fileBuffer, fileName) {
 // ─── JPG from PDF (HD) ───────────────────────────────────────────────────────
 function makeJPG(pdfPath, jpgPath) {
   execSync(
-    'gs -sDEVICE=jpeg -dJPEGQ=80 -r200' +
+    'gs -sDEVICE=jpeg -dJPEGQ=100 -r280' +
     ' -dNOPAUSE -dQUIET -dBATCH' +
     ' -dFirstPage=1 -dLastPage=1' +
     ' -sOutputFile=' + jpgPath + ' ' + pdfPath,
@@ -414,7 +414,7 @@ async function main() {
       await tgSendFile(CHAT_ID, app.appName + '\nRef: ' + ref + '\nPkg: ' + app.packageName, pdfBuf, pdfName);
       console.log('[OK]', pdfName);
 
-      // Send JPG (HD 200dpi)
+      // Send JPG (HD 280dpi)
       const jpgName = ref + '_Certificate_' + safe + '.jpg';
       const jpgPath = path.join(OUTPUT_DIR, jpgName);
       try {
