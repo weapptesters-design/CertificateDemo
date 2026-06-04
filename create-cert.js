@@ -87,7 +87,22 @@ function makeCertHTML(app) {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:1123px;height:794px;overflow:hidden;background:#1B5E20;font-family:'DM Sans',sans-serif}
+
+@page {
+  size: A4 landscape;
+  margin: 0;
+}
+
+html,body{
+  width:297mm;
+  height:210mm;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  background:#1B5E20;
+  font-family:'DM Sans',sans-serif;
+}
+
 #pdf-container{width:1123px;height:794px;background:#fff;border:12px solid #1B5E20;border-radius:6px;padding:32px 36px 24px;display:flex;flex-direction:column;position:relative;}
 .cert-row{display:flex;border-bottom:1px solid #dcdcdc;padding:7px 15px}
 .cert-row:last-child{border-bottom:none}
