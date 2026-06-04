@@ -194,7 +194,7 @@ html,body{
 
   <div style="flex-grow:1;min-height:15px;"></div>
 
-  <div style="position:relative;width:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:5px;flex-shrink:0;">
+  <div style="position:relative;width:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:25px;flex-shrink:0;">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;padding-right:170px;">
       <div style="text-align:left;display:flex;flex-direction:column;gap:3px;">
         <div style="font-weight:800;font-size:14.5px;color:#333;margin-bottom:2px;text-transform:uppercase;letter-spacing:0.5px;">Issued By:</div>
@@ -212,10 +212,10 @@ html,body{
         <div style="font-size:13px;color:#1a1a1a;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Testing Manager</div>
       </div>
     </div>
-    <img src="${SEAL_URL}" alt="Verified Badge" style="position:absolute;bottom:8px;right:0px;width:150px;height:150px;object-fit:contain;z-index:10;">
+    <img src="${SEAL_URL}" alt="Verified Badge" style="position:absolute;bottom:28px;right:0px;width:150px;height:150px;object-fit:contain;z-index:10;">
   </div>
 
-  <div style="margin-top:16px;font-size:13.5px;color:#444;text-align:left;line-height:1.6;border-top:1px solid #e0e0e0;flex-shrink:0;display:flex;align-items:flex-start;gap:8px;background:rgba(0,0,0,0.02);padding:14px 16px;border-radius:6px;">
+  <div style="margin-top:8px;font-size:13.5px;color:#444;text-align:left;line-height:1.6;border-top:1px solid #e0e0e0;flex-shrink:0;display:flex;align-items:flex-start;gap:8px;background:rgba(0,0,0,0.02);padding:14px 16px;border-radius:6px;">
     <div style="font-weight:800;font-size:14px;color:#1a1464;letter-spacing:0.5px;">DISCLAIMER:</div>
     <div style="flex:1;">This certificate confirms ONLY that the specified application version was tested during the stated period by <strong>We App Testers</strong>. Any subsequent updates, modifications, or newly released versions fall outside the scope of this evaluation.</div>
   </div>
