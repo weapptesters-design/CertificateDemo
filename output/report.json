@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-04T04:53:56.167Z",
+  "date": "2026-06-04T05:04:51.806Z",
   "newApps": [
     {
       "key": "com.storyrilssaver27",
@@ -7,9 +7,7 @@
       "packageName": "com.storyrilssaver27",
       "version": "1",
       "startDate": "01 June 2026",
-      "id": "WAT-03EA-2026",
-      "prefix": "2026",
-      "suffix": ""
+      "id": "WAT-03EA-2026"
     },
     {
       "key": "com.delso.nuser",
@@ -17,9 +15,7 @@
       "packageName": "com.delso.nuser",
       "version": "1.3",
       "startDate": "03 June 2026",
-      "id": "WAT-50EA-2026",
-      "prefix": "2026",
-      "suffix": ""
+      "id": "WAT-50EA-2026"
     },
     {
       "key": "com.truecv.app",
@@ -27,9 +23,7 @@
       "packageName": "com.truecv.app",
       "version": "1",
       "startDate": "01 June 2026",
-      "id": "WAT-24EC-2026",
-      "prefix": "2026",
-      "suffix": ""
+      "id": "WAT-24EC-2026"
     },
     {
       "key": "com.truecv.apppppp",
@@ -37,9 +31,7 @@
       "packageName": "com.truecv.apppppp",
       "version": "2",
       "startDate": "02 June 2026",
-      "id": "WAT-253C-2026",
-      "prefix": "2026",
-      "suffix": ""
+      "id": "WAT-253C-2026"
     },
     {
       "key": "com.roaddial_vendor",
@@ -47,9 +39,7 @@
       "packageName": "com.roaddial_vendor",
       "version": "5",
       "startDate": "04 June 2026",
-      "id": "WAT-51EA-2026",
-      "prefix": "2026",
-      "suffix": ""
+      "id": "WAT-51EA-2026"
     }
   ],
   "changedApps": [],
