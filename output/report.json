@@ -1,6 +1,25 @@
 {
-  "date": "2026-06-04T05:16:36.085Z",
+  "date": "2026-06-04T05:18:27.593Z",
   "newApps": [],
-  "changedApps": [],
-  "totalRows": 8
+  "changedApps": [
+    {
+      "previous": {
+        "key": "com.storyrilssaver",
+        "appName": "Ap namwee",
+        "packageName": "com.storyrilssaver",
+        "version": "1.2",
+        "startDate": "01 June 2026",
+        "id": "WAT-02EA-2026"
+      },
+      "current": {
+        "key": "com.storyrilssaver",
+        "appName": "reel saver",
+        "packageName": "com.storyrilssaver",
+        "version": "7",
+        "startDate": "06 June 2026",
+        "id": "WAT-56EC-2026"
+      }
+    }
+  ],
+  "totalRows": 9
 }
