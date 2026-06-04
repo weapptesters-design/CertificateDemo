@@ -110,5 +110,13 @@
     "version": "2",
     "startDate": "01 July 2026",
     "id": "WAT-42EA-2026"
+  },
+  "com.shubhamandroidev.snakerewind": {
+    "key": "com.shubhamandroidev.snakerewind",
+    "appName": "Snake Leder",
+    "packageName": "com.shubhamandroidev.snakerewind",
+    "version": "1",
+    "startDate": "01 August 2026",
+    "id": "WAT-03FC-2026"
   }
 }

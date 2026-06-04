@@ -1,13 +1,13 @@
 {
-  "date": "2026-06-04T07:57:53.046Z",
+  "date": "2026-06-04T08:14:59.904Z",
   "newApps": [
     {
-      "key": "com.nayab.soverign8",
-      "appName": "Soverign",
-      "packageName": "com.nayab.soverign8",
-      "version": "2",
-      "startDate": "01 July 2026",
-      "id": "WAT-42EA-2026"
+      "key": "com.shubhamandroidev.snakerewind",
+      "appName": "Snake Leder",
+      "packageName": "com.shubhamandroidev.snakerewind",
+      "version": "1",
+      "startDate": "01 August 2026",
+      "id": "WAT-03FC-2026"
     }
   ],
   "changedApps": [
