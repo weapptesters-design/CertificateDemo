@@ -58,5 +58,15 @@
     "id": "WAT-253C-2026",
     "prefix": "2026",
     "suffix": ""
+  },
+  "com.roaddial_vendor": {
+    "key": "com.roaddial_vendor",
+    "appName": "roaddial",
+    "packageName": "com.roaddial_vendor",
+    "version": "5",
+    "startDate": "04 June 2026",
+    "id": "WAT-51EA-2026",
+    "prefix": "2026",
+    "suffix": ""
   }
 }
