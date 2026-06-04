@@ -103,7 +103,17 @@ html,body{
   font-family:'DM Sans',sans-serif;
 }
 
-#pdf-container{width:1123px;height:794px;background:#fff;border:12px solid #1B5E20;border-radius:6px;padding:32px 36px 24px;display:flex;flex-direction:column;position:relative;}
+#pdf-container{
+  width:100%;
+  height:100%;
+  background:#fff;
+  border:12px solid #1B5E20;
+  border-radius:6px;
+  padding:32px 36px 24px;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
 .cert-row{display:flex;border-bottom:1px solid #dcdcdc;padding:7px 15px}
 .cert-row:last-child{border-bottom:none}
 .cert-label{width:35%;font-weight:bold;color:#1a1a1a;font-size:13.5px;text-align:left}
