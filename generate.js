@@ -113,6 +113,16 @@ function compareWithPrevious(rows, previousData) {
     const key = makeKey(row);
     if (!key) { console.log('[SKIP] No key for row:', JSON.stringify(row)); continue; }
 
+    // Skip incomplete rows — must have appName + packageName + id
+    const missingFields = [];
+    if (!getCol(row, COL.appName))     missingFields.push('App Name');
+    if (!getCol(row, COL.packageName)) missingFields.push('Package Name');
+    if (!getCol(row, COL.id))          missingFields.push('ID');
+    if (missingFields.length > 0) {
+      console.log('[SKIP] Incomplete row - missing:', missingFields.join(', '), '| Row:', JSON.stringify(row));
+      continue;
+    }
+
     const current = {
       key,
       appName:     getCol(row, COL.appName),

@@ -299,6 +299,14 @@ async function main() {
 
     console.log('\n[' + (i+1) + '/' + newApps.length + ']', app.appName, '| Ref:', ref);
 
+    // Skip if required fields missing
+    if (!app.appName || !app.packageName || !app.id) {
+      console.log('[SKIP] Incomplete app data — skipping PDF. Missing:', 
+        [!app.appName&&'appName', !app.packageName&&'packageName', !app.id&&'id'].filter(Boolean).join(', '));
+      fail++;
+      continue;
+    }
+
     try {
       const html   = makeCertHTML(app);
       const pdfBuf = await makePDF(html, pdfPath, htmlPath);
