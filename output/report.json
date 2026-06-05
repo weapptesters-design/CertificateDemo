@@ -1,13 +1,13 @@
 {
-  "date": "2026-06-04T14:50:13.396Z",
+  "date": "2026-06-05T10:04:22.945Z",
   "newApps": [
     {
-      "key": "erp.ecodemix.mycps",
-      "appName": "My CPS",
-      "packageName": "erp.ecodemix.mycps",
-      "version": "1.0.1",
-      "startDate": "10 April 2026",
-      "id": "WAT-05DC-2026"
+      "key": "com.video2audio.converter",
+      "appName": "Video2Audio",
+      "packageName": "com.video2audio.converter",
+      "version": "1.0.0",
+      "startDate": "27 May  2026",
+      "id": "WAT-22EC-2026"
     }
   ],
   "changedApps": [],

@@ -6,5 +6,13 @@
     "version": "1.0.1",
     "startDate": "10 April 2026",
     "id": "WAT-05DC-2026"
+  },
+  "com.video2audio.converter": {
+    "key": "com.video2audio.converter",
+    "appName": "Video2Audio",
+    "packageName": "com.video2audio.converter",
+    "version": "1.0.0",
+    "startDate": "27 May  2026",
+    "id": "WAT-22EC-2026"
   }
 }
