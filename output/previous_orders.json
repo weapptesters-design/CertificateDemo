@@ -46,5 +46,13 @@
     "version": "1.0.3",
     "startDate": "04 June 2026",
     "id": "WAT-09FC-2026"
+  },
+  "com.7namehgygy": {
+    "key": "com.7namehgygy",
+    "appName": "name10",
+    "packageName": "com.7namehgygy",
+    "version": "1",
+    "startDate": "01 June 2026",
+    "id": "WAT-10FC-2026"
   }
 }

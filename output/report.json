@@ -1,45 +1,53 @@
 {
-  "date": "2026-06-05T19:08:31.015Z",
+  "date": "2026-06-05T19:55:44.134Z",
   "newApps": [
     {
-      "key": "com.rishy.app",
-      "appName": "RISHY",
-      "packageName": "com.rishy.app",
-      "version": "1.0.3",
-      "startDate": "04 June 2026",
-      "id": "WAT-04FC-2026"
+      "key": "com.7namehgygy",
+      "appName": "name10",
+      "packageName": "com.7namehgygy",
+      "version": "1",
+      "startDate": "01 June 2026",
+      "id": "WAT-10FC-2026"
     },
     {
-      "key": "com.video2audio.convert",
-      "appName": "Video2Audio",
-      "packageName": "com.video2audio.convert",
-      "version": "",
-      "startDate": "27 June 2026",
-      "id": "WAT-22EC-2026"
+      "key": "com.7namehgygy",
+      "appName": "name10",
+      "packageName": "com.7namehgygy",
+      "version": "1",
+      "startDate": "02 June 2026",
+      "id": "WAT-10FC-2026"
     },
     {
-      "key": "com.ri",
-      "appName": "RISHY",
-      "packageName": "com.ri",
-      "version": "",
-      "startDate": "04 June 2026",
-      "id": "WAT-04FC-2026"
+      "key": "com.7namehgygy",
+      "appName": "name10",
+      "packageName": "com.7namehgygy",
+      "version": "1",
+      "startDate": "01 June 2026",
+      "id": "WAT-10FC-2026"
     },
     {
-      "key": "com.rishy.app",
-      "appName": "RISHY2",
-      "packageName": "com.rishy.app",
-      "version": "1.0.3",
-      "startDate": "04 June 2026",
-      "id": "WAT-08FC-2026"
+      "key": "com.7namehgygy",
+      "appName": "name10",
+      "packageName": "com.7namehgygy",
+      "version": "1",
+      "startDate": "01 June 2026",
+      "id": "WAT-111FC-2026"
     },
     {
-      "key": "com.rishy.app1",
-      "appName": "RISHY2",
-      "packageName": "com.rishy.app1",
-      "version": "1.0.3",
-      "startDate": "04 June 2026",
-      "id": "WAT-09FC-2026"
+      "key": "com.7namehgygy",
+      "appName": "name101",
+      "packageName": "com.7namehgygy",
+      "version": "1",
+      "startDate": "01 June 2026",
+      "id": "WAT-10FC-2026"
+    },
+    {
+      "key": "com.7namehgygy",
+      "appName": "name10",
+      "packageName": "com.7namehgygy",
+      "version": "1",
+      "startDate": "01 June 2026",
+      "id": "WAT-10FC-2026"
     }
   ],
   "changedApps": [],
