@@ -17,42 +17,10 @@
   },
   "com.rishy.app": {
     "key": "com.rishy.app",
-    "appName": "RISHY2",
+    "appName": "RISHY",
     "packageName": "com.rishy.app",
     "version": "1.0.3",
     "startDate": "04 June 2026",
-    "id": "WAT-08FC-2026"
-  },
-  "com.video2audio.convert": {
-    "key": "com.video2audio.convert",
-    "appName": "Video2Audio",
-    "packageName": "com.video2audio.convert",
-    "version": "",
-    "startDate": "27 June 2026",
-    "id": "WAT-22EC-2026"
-  },
-  "com.ri": {
-    "key": "com.ri",
-    "appName": "RISHY",
-    "packageName": "com.ri",
-    "version": "",
-    "startDate": "04 June 2026",
     "id": "WAT-04FC-2026"
-  },
-  "com.rishy.app1": {
-    "key": "com.rishy.app1",
-    "appName": "RISHY2",
-    "packageName": "com.rishy.app1",
-    "version": "1.0.3",
-    "startDate": "04 June 2026",
-    "id": "WAT-09FC-2026"
-  },
-  "com.7namehgygy": {
-    "key": "com.7namehgygy",
-    "appName": "name10",
-    "packageName": "com.7namehgygy",
-    "version": "1",
-    "startDate": "01 June 2026",
-    "id": "WAT-10FC-2026"
   }
 }

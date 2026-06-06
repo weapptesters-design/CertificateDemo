@@ -1,55 +1,6 @@
 {
-  "date": "2026-06-05T19:55:44.134Z",
-  "newApps": [
-    {
-      "key": "com.7namehgygy",
-      "appName": "name10",
-      "packageName": "com.7namehgygy",
-      "version": "1",
-      "startDate": "01 June 2026",
-      "id": "WAT-10FC-2026"
-    },
-    {
-      "key": "com.7namehgygy",
-      "appName": "name10",
-      "packageName": "com.7namehgygy",
-      "version": "1",
-      "startDate": "02 June 2026",
-      "id": "WAT-10FC-2026"
-    },
-    {
-      "key": "com.7namehgygy",
-      "appName": "name10",
-      "packageName": "com.7namehgygy",
-      "version": "1",
-      "startDate": "01 June 2026",
-      "id": "WAT-10FC-2026"
-    },
-    {
-      "key": "com.7namehgygy",
-      "appName": "name10",
-      "packageName": "com.7namehgygy",
-      "version": "1",
-      "startDate": "01 June 2026",
-      "id": "WAT-111FC-2026"
-    },
-    {
-      "key": "com.7namehgygy",
-      "appName": "name101",
-      "packageName": "com.7namehgygy",
-      "version": "1",
-      "startDate": "01 June 2026",
-      "id": "WAT-10FC-2026"
-    },
-    {
-      "key": "com.7namehgygy",
-      "appName": "name10",
-      "packageName": "com.7namehgygy",
-      "version": "1",
-      "startDate": "01 June 2026",
-      "id": "WAT-10FC-2026"
-    }
-  ],
+  "date": "2026-06-06T08:43:01.114Z",
+  "newApps": [],
   "changedApps": [],
   "totalRows": 199
 }
