@@ -1,26 +1,74 @@
 {
-  "erp.ecodemix.mycps": {
-    "key": "erp.ecodemix.mycps",
-    "appName": "My CPS",
-    "packageName": "erp.ecodemix.mycps",
-    "version": "1.0.1",
-    "startDate": "10 April 2026",
-    "id": "WAT-05DC-2026"
+  "com.chatmaster": {
+    "key": "com.chatmaster",
+    "appName": "Chat Master",
+    "packageName": "com.chatmaster",
+    "version": "1.0",
+    "startDate": "01 June 2026",
+    "id": "WAT-TC002-2026"
   },
-  "com.video2audio.converter": {
-    "key": "com.video2audio.converter",
-    "appName": "Video2Audio",
-    "packageName": "com.video2audio.converter",
-    "version": "1.0.0",
-    "startDate": "27 May  2026",
-    "id": "WAT-22EC-2026"
+  "com.weatherpro": {
+    "key": "com.weatherpro",
+    "appName": "Weather Pro",
+    "packageName": "com.weatherpro",
+    "version": "2.1",
+    "startDate": "01 June 2026",
+    "id": "WAT-TC003-2026"
   },
-  "com.rishy.app": {
-    "key": "com.rishy.app",
-    "appName": "RISHY",
-    "packageName": "com.rishy.app",
-    "version": "1.0.3",
-    "startDate": "04 June 2026",
-    "id": "WAT-04FC-2026"
+  "com.fitnesshub": {
+    "key": "com.fitnesshub",
+    "appName": "Fitness Hub",
+    "packageName": "com.fitnesshub",
+    "version": "3.0",
+    "startDate": "01 June 2026",
+    "id": "WAT-TC004-2026"
+  },
+  "com.budgettracker": {
+    "key": "com.budgettracker",
+    "appName": "Budget Tracker",
+    "packageName": "com.budgettracker",
+    "version": "1.5",
+    "startDate": "01 June 2026",
+    "id": "WAT-TC005-2026"
+  },
+  "com.photoedit": {
+    "key": "com.photoedit",
+    "appName": "Photo Edit",
+    "packageName": "com.photoedit",
+    "version": "5.0",
+    "startDate": "01 June 2026",
+    "id": "WAT-TC009-2026"
+  },
+  "com.taskmanager": {
+    "key": "com.taskmanager",
+    "appName": "Task Manager",
+    "packageName": "com.taskmanager",
+    "version": "2.0",
+    "startDate": "",
+    "id": "WAT-TC010-2026"
+  },
+  "com.dup1": {
+    "key": "com.dup1",
+    "appName": "Duplicate Name",
+    "packageName": "com.dup1",
+    "version": "1.0",
+    "startDate": "01 June 2026",
+    "id": "WAT-TC012-2026"
+  },
+  "com.dup2": {
+    "key": "com.dup2",
+    "appName": "Duplicate Name",
+    "packageName": "com.dup2",
+    "version": "1.1",
+    "startDate": "01 June 2026",
+    "id": "WAT-TC013-2026"
+  },
+  "com.datetest": {
+    "key": "com.datetest",
+    "appName": "Date Test",
+    "packageName": "com.datetest",
+    "version": "1.0",
+    "startDate": "invalid-date June 2026",
+    "id": "WAT-TC014-2026"
   }
 }
