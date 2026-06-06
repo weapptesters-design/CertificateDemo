@@ -1,8 +1,10 @@
 /**
  * generate.js — We App Testers
  * CSV download → Parse → Compare → Detect new apps → Save state
- * 
- * CSV column: "ID" = full id like "WAT-67V-2026" (no separate prefix/suffix needed)
+ *
+ * Rules:
+ * - Only rows where Generate column = "yes" (case-insensitive) are processed
+ * - Ignored rows are completely skipped — not in report.json, not in previous_orders.json
  */
 
 const fs   = require('fs');
@@ -15,13 +17,13 @@ const PREV_FILE   = path.join(OUTPUT_DIR, 'previous_orders.json');
 const REPORT_FILE = path.join(OUTPUT_DIR, 'report.json');
 const CSV_URL     = process.env.SHEETS_CSV_URL;
 
-// Column aliases — add your actual CSV header names here if different
 const COL = {
   appName:     ['App Name', 'app_name', 'AppName', 'App', 'Name'],
   packageName: ['Package Name', 'package_name', 'PackageName', 'Package'],
   version:     ['Version', 'version', 'Ver'],
   startDate:   ['Start Date', 'start_date', 'StartDate', 'Start'],
   id:          ['ID', 'id', 'Id', 'Order ID', 'OrderID', 'App ID', 'AppID'],
+  generate:    ['Generate', 'generate', 'GENERATE', 'Gen', 'gen'],
 };
 
 function ensureOutputDir() {
@@ -35,11 +37,16 @@ function getCol(row, aliases) {
   return '';
 }
 
-// Unique key per app — packageName is most reliable
+// Returns true only if Generate = "yes" (case-insensitive, trimmed)
+function shouldGenerate(row) {
+  const val = getCol(row, COL.generate).toLowerCase().trim();
+  return val === 'yes';
+}
+
 function makeKey(row) {
-  const pkg = getCol(row, COL.packageName);
-  const id  = getCol(row, COL.id);
-  const name= getCol(row, COL.appName);
+  const pkg  = getCol(row, COL.packageName);
+  const id   = getCol(row, COL.id);
+  const name = getCol(row, COL.appName);
   return pkg || id || name || null;
 }
 
@@ -73,11 +80,11 @@ function parseCSV(raw) {
     if (Object.values(row).every(v => v === '')) continue;
     rows.push(row);
   }
-  console.log('[CSV] Rows:', rows.length);
+  console.log('[CSV] Total rows parsed:', rows.length);
   return rows;
 }
 
-// ─── DOWNLOADER with redirect support ────────────────────────────────────────
+// ─── DOWNLOADER ───────────────────────────────────────────────────────────────
 function downloadCSV(url) {
   return new Promise((resolve, reject) => {
     let redirects = 0;
@@ -108,28 +115,45 @@ function downloadCSV(url) {
 // ─── COMPARE ─────────────────────────────────────────────────────────────────
 function compareWithPrevious(rows, previousData) {
   const newApps = [], changedApps = [];
+  let skippedGenerate = 0, skippedIncomplete = 0;
 
   for (const row of rows) {
-    const key = makeKey(row);
-    if (!key) { console.log('[SKIP] No key for row:', JSON.stringify(row)); continue; }
 
-    // Skip incomplete rows — must have appName + packageName + id
-    const missingFields = [];
-    if (!getCol(row, COL.appName))     missingFields.push('App Name');
-    if (!getCol(row, COL.packageName)) missingFields.push('Package Name');
-    if (!getCol(row, COL.id))          missingFields.push('ID');
-    if (missingFields.length > 0) {
-      console.log('[SKIP] Incomplete row - missing:', missingFields.join(', '), '| Row:', JSON.stringify(row));
+    // ── FILTER 1: Generate column must be "yes" ──────────────────────────────
+    if (!shouldGenerate(row)) {
+      const genVal = getCol(row, COL.generate) || '(blank)';
+      console.log('[SKIP] Generate="' + genVal + '" →', getCol(row, COL.appName) || '(no name)');
+      skippedGenerate++;
+      continue;  // completely ignored — not added to state either
+    }
+
+    // ── FILTER 2: Key must exist ──────────────────────────────────────────────
+    const key = makeKey(row);
+    if (!key) {
+      console.log('[SKIP] No key for row:', JSON.stringify(row));
+      skippedIncomplete++;
       continue;
     }
 
+    // ── FILTER 3: Required fields ─────────────────────────────────────────────
+    const missing = [];
+    if (!getCol(row, COL.appName))     missing.push('App Name');
+    if (!getCol(row, COL.packageName)) missing.push('Package Name');
+    if (!getCol(row, COL.id))          missing.push('ID');
+    if (missing.length > 0) {
+      console.log('[SKIP] Missing fields:', missing.join(', '));
+      skippedIncomplete++;
+      continue;
+    }
+
+    // ── Eligible row — compare with previous ──────────────────────────────────
     const current = {
       key,
       appName:     getCol(row, COL.appName),
       packageName: getCol(row, COL.packageName),
       version:     getCol(row, COL.version),
       startDate:   getCol(row, COL.startDate),
-      id:          getCol(row, COL.id),   // full ID like WAT-67V-2026
+      id:          getCol(row, COL.id),
     };
 
     if (!previousData[key]) {
@@ -146,6 +170,8 @@ function compareWithPrevious(rows, previousData) {
     }
   }
 
+  console.log('[FILTER] Skipped (Generate != yes):', skippedGenerate);
+  console.log('[FILTER] Skipped (Incomplete):', skippedIncomplete);
   return { newApps, changedApps };
 }
 
@@ -155,19 +181,17 @@ async function main() {
   console.log('[TIME]', new Date().toISOString());
   ensureOutputDir();
 
-  // Load previous state
   let previousData = {};
   if (fs.existsSync(PREV_FILE)) {
     try {
       previousData = JSON.parse(fs.readFileSync(PREV_FILE, 'utf8'));
       console.log('[STATE] Loaded', Object.keys(previousData).length, 'entries');
-      // Debug: show existing keys
       console.log('[STATE] Keys:', Object.keys(previousData).slice(0,5).join(', '));
     } catch(e) {
       console.warn('[WARN] Bad previous_orders.json, starting fresh:', e.message);
     }
   } else {
-    console.log('[STATE] No previous_orders.json — first run, all apps = new');
+    console.log('[STATE] No previous_orders.json — first run');
   }
 
   if (!CSV_URL) { console.error('[ERROR] SHEETS_CSV_URL not set'); process.exit(1); }
@@ -196,15 +220,22 @@ async function main() {
   const { newApps, changedApps } = compareWithPrevious(rows, previousData);
   console.log('[RESULT] New:', newApps.length, '| Changed:', changedApps.length);
 
-  // Save report
-  fs.writeFileSync(REPORT_FILE, JSON.stringify({ date: new Date().toISOString(), newApps, changedApps, totalRows: rows.length }, null, 2));
+  // Save report — only eligible (Generate=yes) apps appear here
+  fs.writeFileSync(REPORT_FILE, JSON.stringify({
+    date: new Date().toISOString(),
+    newApps,
+    changedApps,
+    totalRows: rows.length,
+  }, null, 2));
   console.log('[FILE] report.json saved');
 
-  // Update state — key = packageName (same as makeKey)
+  // Save state — only eligible apps saved (ignored rows never enter state)
   const newPrev = {};
   for (const row of rows) {
+    if (!shouldGenerate(row)) continue;  // ignored rows never saved to state
     const key = makeKey(row);
     if (!key) continue;
+    if (!getCol(row, COL.appName) || !getCol(row, COL.packageName) || !getCol(row, COL.id)) continue;
     newPrev[key] = {
       key,
       appName:     getCol(row, COL.appName),
@@ -215,7 +246,7 @@ async function main() {
     };
   }
   fs.writeFileSync(PREV_FILE, JSON.stringify(newPrev, null, 2));
-  console.log('[FILE] previous_orders.json updated —', Object.keys(newPrev).length, 'entries');
+  console.log('[FILE] previous_orders.json updated —', Object.keys(newPrev).length, 'eligible entries saved');
   console.log('=== generate.js DONE ===');
 }
 
