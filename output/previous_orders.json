@@ -23,6 +23,14 @@
     "startDate": "04 June 2026",
     "id": "WAT-04FC-2026"
   },
+  "com.text.all.translator": {
+    "key": "com.text.all.translator",
+    "appName": "All Language Translator",
+    "packageName": "com.text.all.translator",
+    "version": "1.0.0",
+    "startDate": "02 June 2026",
+    "id": "WAT-02FB-2026"
+  },
   "com.xtravolumepro.xtravolumepro": {
     "key": "com.xtravolumepro.xtravolumepro",
     "appName": "Xtra Volume Pro",
@@ -30,6 +38,14 @@
     "version": "1.0.1",
     "startDate": "02 June 2026",
     "id": "WAT-03FA-2026"
+  },
+  "com.xsensi.headshotpro": {
+    "key": "com.xsensi.headshotpro",
+    "appName": "Headshot Sensi pro",
+    "packageName": "com.xsensi.headshotpro",
+    "version": "1.0.0",
+    "startDate": "03 June 2026",
+    "id": "WAT-03FB-2026"
   },
   "com.techub.alcalcuaters": {
     "key": "com.techub.alcalcuaters",
@@ -47,6 +63,14 @@
     "startDate": "03 June 2026",
     "id": "WAT-05FA-2026"
   },
+  "com.feedalto.realestate": {
+    "key": "com.feedalto.realestate",
+    "appName": "Feedalto",
+    "packageName": "com.feedalto.realestate",
+    "version": "1.0.1",
+    "startDate": "05 June 2026",
+    "id": "WAT-05FB-2026"
+  },
   "co.oneg.partner": {
     "key": "co.oneg.partner",
     "appName": "Oneg Partner",
@@ -55,6 +79,14 @@
     "startDate": "03 June 2026",
     "id": "WAT-06FA-2026"
   },
+  "com.prodigyfantasysports.app": {
+    "key": "com.prodigyfantasysports.app",
+    "appName": "Prodigy Sports Games",
+    "packageName": "com.prodigyfantasysports.app",
+    "version": "1.0.2",
+    "startDate": "05 June 2026",
+    "id": "WAT-06FB-2026"
+  },
   "com.historytrivia.app": {
     "key": "com.historytrivia.app",
     "appName": "History Trivia-Daily Quiz",
@@ -62,6 +94,14 @@
     "version": "1.1.0",
     "startDate": "03 June 2026",
     "id": "WAT-07FA-2026"
+  },
+  "com.t3all_restaurant": {
+    "key": "com.t3all_restaurant",
+    "appName": "Gebblly Restaurant",
+    "packageName": "com.t3all_restaurant",
+    "version": "1.0.0",
+    "startDate": "05 June 2026",
+    "id": "WAT-07FB-2026"
   },
   "com.connex.onetoone": {
     "key": "com.connex.onetoone",
