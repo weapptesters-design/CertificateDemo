@@ -1,6 +1,151 @@
 {
-  "date": "2026-06-23T09:56:44.217Z",
-  "newApps": [],
+  "date": "2026-06-24T05:38:19.504Z",
+  "newApps": [
+    {
+      "key": "erp.ecodemix.mycps",
+      "appName": "Chaw",
+      "packageName": "erp.ecodemix.mycps",
+      "version": "1.0.1",
+      "startDate": "01 June 2026",
+      "id": "WAT-01FA-2026"
+    },
+    {
+      "key": "com.video2audio.converter",
+      "appName": "SPT Campo Pro",
+      "packageName": "com.video2audio.converter",
+      "version": "1.0.0",
+      "startDate": "01 June 2026",
+      "id": "WAT-01FB-2026"
+    },
+    {
+      "key": "com.rishy.app",
+      "appName": "QRNova",
+      "packageName": "com.rishy.app",
+      "version": "1.0.0",
+      "startDate": "02 June 2026",
+      "id": "WAT-02FA-2026"
+    },
+    {
+      "key": "com.xtravolumepro.xtravolumepro",
+      "appName": "Xtra Volume Pro",
+      "packageName": "com.xtravolumepro.xtravolumepro",
+      "version": "1.0.1",
+      "startDate": "02 June 2026",
+      "id": "WAT-03FA-2026"
+    },
+    {
+      "key": "com.techub.alcalcuaters",
+      "appName": "AI CALCULATOR",
+      "packageName": "com.techub.alcalcuaters",
+      "version": "1.0.0",
+      "startDate": "02 June 2026",
+      "id": "WAT-04FA-2026"
+    },
+    {
+      "key": "com.asenterprises.onemorefloorescapetower",
+      "appName": "One More Floor: Escape Tower",
+      "packageName": "com.asenterprises.onemorefloorescapetower",
+      "version": "1.0.0",
+      "startDate": "03 June 2026",
+      "id": "WAT-05FA-2026"
+    },
+    {
+      "key": "co.oneg.partner",
+      "appName": "Oneg Partner",
+      "packageName": "co.oneg.partner",
+      "version": "1.0.0",
+      "startDate": "03 June 2026",
+      "id": "WAT-06FA-2026"
+    },
+    {
+      "key": "com.historytrivia.app",
+      "appName": "History Trivia-Daily Quiz",
+      "packageName": "com.historytrivia.app",
+      "version": "1.1.0",
+      "startDate": "03 June 2026",
+      "id": "WAT-07FA-2026"
+    },
+    {
+      "key": "com.connex.onetoone",
+      "appName": "One Two One",
+      "packageName": "com.connex.onetoone",
+      "version": "1.0.0",
+      "startDate": "04 June 2026",
+      "id": "WAT-08FA-2026"
+    },
+    {
+      "key": "com.seafarerdoc.octotik",
+      "appName": "Octo Tik",
+      "packageName": "com.seafarerdoc.octotik",
+      "version": "1.38.3",
+      "startDate": "04 June 2026",
+      "id": "WAT-09FA-2026"
+    },
+    {
+      "key": "com.gmail.gmail",
+      "appName": "Vortex",
+      "packageName": "com.gmail.gmail",
+      "version": "1.0.0",
+      "startDate": "04 June 2026",
+      "id": "WAT-10FA-2026"
+    },
+    {
+      "key": "com.InstaWall.app",
+      "appName": "InstaWall",
+      "packageName": "com.InstaWall.app",
+      "version": "1.0.0",
+      "startDate": "04 June 2026",
+      "id": "WAT-11FA-2026"
+    },
+    {
+      "key": "com.roxludo.roxludo",
+      "appName": "ROX Ludo",
+      "packageName": "com.roxludo.roxludo",
+      "version": "1.1.0",
+      "startDate": "01 June 2026",
+      "id": "WAT-01FC-2026"
+    },
+    {
+      "key": "com.sg.finvault",
+      "appName": "SG Finvault",
+      "packageName": "com.sg.finvault",
+      "version": "1.1",
+      "startDate": "02 June 2026",
+      "id": "WAT-02FC-2026"
+    },
+    {
+      "key": "com.shubhamandroidev.snakerewind",
+      "appName": "Snake Rewind",
+      "packageName": "com.shubhamandroidev.snakerewind",
+      "version": "1.0.0",
+      "startDate": "04 June 2026",
+      "id": "WAT-03FC-2026"
+    },
+    {
+      "key": "com.rishy.app",
+      "appName": "RISHY",
+      "packageName": "com.rishy.app",
+      "version": "1.0.4",
+      "startDate": "04 June 2026",
+      "id": "WAT-04FC-2026"
+    },
+    {
+      "key": "app.grace.quotes",
+      "appName": "Grace Bible Quotes",
+      "packageName": "app.grace.quotes",
+      "version": "1.0.0",
+      "startDate": "05 June 2026",
+      "id": "WAT-05FC-2026"
+    },
+    {
+      "key": "com.chefclemzy.app",
+      "appName": "Chef Clemzy",
+      "packageName": "com.chefclemzy.app",
+      "version": "1.0.1",
+      "startDate": "",
+      "id": "WAT-20FA-2026"
+    }
+  ],
   "changedApps": [],
   "totalRows": 217
 }
