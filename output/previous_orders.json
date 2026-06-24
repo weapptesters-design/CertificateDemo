@@ -55,6 +55,14 @@
     "startDate": "02 June 2026",
     "id": "WAT-04FA-2026"
   },
+  "com.codepillars.notecanvas": {
+    "key": "com.codepillars.notecanvas",
+    "appName": "NoteCanvas",
+    "packageName": "com.codepillars.notecanvas",
+    "version": "1.1",
+    "startDate": "05 June 2026",
+    "id": "WAT-04FB-2026"
+  },
   "com.asenterprises.onemorefloorescapetower": {
     "key": "com.asenterprises.onemorefloorescapetower",
     "appName": "One More Floor: Escape Tower",
