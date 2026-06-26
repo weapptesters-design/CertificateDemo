@@ -143,6 +143,62 @@
     "startDate": "04 June 2026",
     "id": "WAT-11FA-2026"
   },
+  "com.mycompany.aqaratiraq": {
+    "key": "com.mycompany.aqaratiraq",
+    "appName": "Aqarat All Iraq",
+    "packageName": "com.mycompany.aqaratiraq",
+    "version": "1.0.0",
+    "startDate": "05 June 2026",
+    "id": "WAT-12FA-2026"
+  },
+  "com.arvaai.app": {
+    "key": "com.arvaai.app",
+    "appName": "Arva Ai",
+    "packageName": "com.arvaai.app",
+    "version": "1.0.0",
+    "startDate": "05 June 2026",
+    "id": "WAT-13FA-2026"
+  },
+  "com.t3all_customer": {
+    "key": "com.t3all_customer",
+    "appName": "Gebblly",
+    "packageName": "com.t3all_customer",
+    "version": "1.0.0",
+    "startDate": "06 June 2026",
+    "id": "WAT-14FA-2026"
+  },
+  "com.zorixsoft.PromptBot": {
+    "key": "com.zorixsoft.PromptBot",
+    "appName": "PromptBot - AI Photo Editing",
+    "packageName": "com.zorixsoft.PromptBot",
+    "version": "1.0.0",
+    "startDate": "06 June 2026",
+    "id": "WAT-15FA-2026"
+  },
+  "com.rd.lock": {
+    "key": "com.rd.lock",
+    "appName": "Focus Lock- App Locker/planner",
+    "packageName": "com.rd.lock",
+    "version": "1.0.0",
+    "startDate": "07 June 2026",
+    "id": "WAT-16FA-2026"
+  },
+  "com.rasoiai.app": {
+    "key": "com.rasoiai.app",
+    "appName": "Rasoi AI - AI powered Kitchen",
+    "packageName": "com.rasoiai.app",
+    "version": "1.0.0",
+    "startDate": "07 June 2026",
+    "id": "WAT-17FA-2026"
+  },
+  "com.aceacademy.mobile": {
+    "key": "com.aceacademy.mobile",
+    "appName": "My Ace",
+    "packageName": "com.aceacademy.mobile",
+    "version": "1.0.0",
+    "startDate": "08 June 2026",
+    "id": "WAT-18FA-2026"
+  },
   "com.roxludo.roxludo": {
     "key": "com.roxludo.roxludo",
     "appName": "ROX Ludo",
@@ -174,6 +230,14 @@
     "version": "1.0.0",
     "startDate": "05 June 2026",
     "id": "WAT-05FC-2026"
+  },
+  "com.mwktech.affirmations.mindfuel": {
+    "key": "com.mwktech.affirmations.mindfuel",
+    "appName": "Mindfuel: Daily Affirmations",
+    "packageName": "com.mwktech.affirmations.mindfuel",
+    "version": "2.0",
+    "startDate": "10 June 2026",
+    "id": "WAT-19FA-2026"
   },
   "com.chefclemzy.app": {
     "key": "com.chefclemzy.app",

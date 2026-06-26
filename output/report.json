@@ -1,6 +1,71 @@
 {
-  "date": "2026-06-25T09:35:25.448Z",
-  "newApps": [],
+  "date": "2026-06-26T09:40:58.916Z",
+  "newApps": [
+    {
+      "key": "com.mycompany.aqaratiraq",
+      "appName": "Aqarat All Iraq",
+      "packageName": "com.mycompany.aqaratiraq",
+      "version": "1.0.0",
+      "startDate": "05 June 2026",
+      "id": "WAT-12FA-2026"
+    },
+    {
+      "key": "com.arvaai.app",
+      "appName": "Arva Ai",
+      "packageName": "com.arvaai.app",
+      "version": "1.0.0",
+      "startDate": "05 June 2026",
+      "id": "WAT-13FA-2026"
+    },
+    {
+      "key": "com.t3all_customer",
+      "appName": "Gebblly",
+      "packageName": "com.t3all_customer",
+      "version": "1.0.0",
+      "startDate": "06 June 2026",
+      "id": "WAT-14FA-2026"
+    },
+    {
+      "key": "com.zorixsoft.PromptBot",
+      "appName": "PromptBot - AI Photo Editing",
+      "packageName": "com.zorixsoft.PromptBot",
+      "version": "1.0.0",
+      "startDate": "06 June 2026",
+      "id": "WAT-15FA-2026"
+    },
+    {
+      "key": "com.rd.lock",
+      "appName": "Focus Lock- App Locker/planner",
+      "packageName": "com.rd.lock",
+      "version": "1.0.0",
+      "startDate": "07 June 2026",
+      "id": "WAT-16FA-2026"
+    },
+    {
+      "key": "com.rasoiai.app",
+      "appName": "Rasoi AI - AI powered Kitchen",
+      "packageName": "com.rasoiai.app",
+      "version": "1.0.0",
+      "startDate": "07 June 2026",
+      "id": "WAT-17FA-2026"
+    },
+    {
+      "key": "com.aceacademy.mobile",
+      "appName": "My Ace",
+      "packageName": "com.aceacademy.mobile",
+      "version": "1.0.0",
+      "startDate": "08 June 2026",
+      "id": "WAT-18FA-2026"
+    },
+    {
+      "key": "com.mwktech.affirmations.mindfuel",
+      "appName": "Mindfuel: Daily Affirmations",
+      "packageName": "com.mwktech.affirmations.mindfuel",
+      "version": "2.0",
+      "startDate": "10 June 2026",
+      "id": "WAT-19FA-2026"
+    }
+  ],
   "changedApps": [
     {
       "previous": {
