@@ -231,6 +231,46 @@
     "startDate": "05 June 2026",
     "id": "WAT-05FC-2026"
   },
+  "com.istudioinc.stackelite": {
+    "key": "com.istudioinc.stackelite",
+    "appName": "Stack Elite",
+    "packageName": "com.istudioinc.stackelite",
+    "version": "0.1.0",
+    "startDate": "05 June 2026",
+    "id": "WAT-06FC-2026"
+  },
+  "com.t3all_driver": {
+    "key": "com.t3all_driver",
+    "appName": "Gebblly Driver",
+    "packageName": "com.t3all_driver",
+    "version": "1.0",
+    "startDate": "05 June 2026",
+    "id": "WAT-07FC-2026"
+  },
+  "com.bit2bid.bidding": {
+    "key": "com.bit2bid.bidding",
+    "appName": "Bit2Bid",
+    "packageName": "com.bit2bid.bidding",
+    "version": "1.0.2",
+    "startDate": "05 June 2026",
+    "id": "WAT-08FC-2026"
+  },
+  "com.intraeats.app": {
+    "key": "com.intraeats.app",
+    "appName": "Intraeats",
+    "packageName": "com.intraeats.app",
+    "version": "11.0",
+    "startDate": "07 June 2026",
+    "id": "WAT-09FC-2026"
+  },
+  "app.emergent.rktradersrates3796d97d": {
+    "key": "app.emergent.rktradersrates3796d97d",
+    "appName": "RK Scrap Traders",
+    "packageName": "app.emergent.rktradersrates3796d97d",
+    "version": "1.0.2",
+    "startDate": "07 June 2026",
+    "id": "WAT-10FC-2026"
+  },
   "com.mwktech.affirmations.mindfuel": {
     "key": "com.mwktech.affirmations.mindfuel",
     "appName": "Mindfuel: Daily Affirmations",
