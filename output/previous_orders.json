@@ -119,6 +119,14 @@
     "startDate": "04 June 2026",
     "id": "WAT-08FA-2026"
   },
+  "com.aistudio.riseup.jlkqm": {
+    "key": "com.aistudio.riseup.jlkqm",
+    "appName": "Rise Up Balloon",
+    "packageName": "com.aistudio.riseup.jlkqm",
+    "version": "1.0",
+    "startDate": "09 June 2026",
+    "id": "WAT-08FB-2026"
+  },
   "com.seafarerdoc.octotik": {
     "key": "com.seafarerdoc.octotik",
     "appName": "Octo Tik",
@@ -126,6 +134,14 @@
     "version": "1.38.3",
     "startDate": "04 June 2026",
     "id": "WAT-09FA-2026"
+  },
+  "com.rishta.rishta_link": {
+    "key": "com.rishta.rishta_link",
+    "appName": "Rishta Link",
+    "packageName": "com.rishta.rishta_link",
+    "version": "1.0.1",
+    "startDate": "11 June 2026",
+    "id": "WAT-09FB-2026"
   },
   "com.gmail.gmail": {
     "key": "com.gmail.gmail",
@@ -135,6 +151,14 @@
     "startDate": "04 June 2026",
     "id": "WAT-10FA-2026"
   },
+  "com.seafarerdoc.octoclient": {
+    "key": "com.seafarerdoc.octoclient",
+    "appName": "OctoClient",
+    "packageName": "com.seafarerdoc.octoclient",
+    "version": "1.18.1",
+    "startDate": "11 June 2026",
+    "id": "WAT-10FB-2026"
+  },
   "com.InstaWall.app": {
     "key": "com.InstaWall.app",
     "appName": "InstaWall",
@@ -142,6 +166,14 @@
     "version": "1.0.0",
     "startDate": "04 June 2026",
     "id": "WAT-11FA-2026"
+  },
+  "com.smartgrade.app": {
+    "key": "com.smartgrade.app",
+    "appName": "SmartGrade",
+    "packageName": "com.smartgrade.app",
+    "version": "0.1.1",
+    "startDate": "11 June 2026",
+    "id": "WAT-11FB-2026"
   },
   "com.mycompany.aqaratiraq": {
     "key": "com.mycompany.aqaratiraq",
@@ -151,6 +183,14 @@
     "startDate": "05 June 2026",
     "id": "WAT-12FA-2026"
   },
+  "com.exams.fts4rankingsearch2": {
+    "key": "com.exams.fts4rankingsearch2",
+    "appName": "Search GCERT",
+    "packageName": "com.exams.fts4rankingsearch2",
+    "version": "1.11",
+    "startDate": "12 June 2026",
+    "id": "WAT-12FB-2026"
+  },
   "com.arvaai.app": {
     "key": "com.arvaai.app",
     "appName": "Arva Ai",
@@ -158,6 +198,14 @@
     "version": "1.0.0",
     "startDate": "05 June 2026",
     "id": "WAT-13FA-2026"
+  },
+  "com.besdong.messenger.app": {
+    "key": "com.besdong.messenger.app",
+    "appName": "Besdong Messenger",
+    "packageName": "com.besdong.messenger.app",
+    "version": "1.0.0",
+    "startDate": "12 June 2026",
+    "id": "WAT-13FB-2026"
   },
   "com.t3all_customer": {
     "key": "com.t3all_customer",
@@ -167,6 +215,14 @@
     "startDate": "06 June 2026",
     "id": "WAT-14FA-2026"
   },
+  "au.com.duedocs": {
+    "key": "au.com.duedocs",
+    "appName": "Zyro Call",
+    "packageName": "au.com.duedocs",
+    "version": "1.0.6",
+    "startDate": "12 June 2026",
+    "id": "WAT-14FB-2026"
+  },
   "com.zorixsoft.PromptBot": {
     "key": "com.zorixsoft.PromptBot",
     "appName": "PromptBot - AI Photo Editing",
@@ -174,6 +230,14 @@
     "version": "1.0.0",
     "startDate": "06 June 2026",
     "id": "WAT-15FA-2026"
+  },
+  "com.audenahub": {
+    "key": "com.audenahub",
+    "appName": "Audenahub",
+    "packageName": "com.audenahub",
+    "version": "1.0",
+    "startDate": "12 June 2026",
+    "id": "WAT-15FB-2026"
   },
   "com.rd.lock": {
     "key": "com.rd.lock",
@@ -183,6 +247,14 @@
     "startDate": "07 June 2026",
     "id": "WAT-16FA-2026"
   },
+  "dev.haltansu.bloom": {
+    "key": "dev.haltansu.bloom",
+    "appName": "Bloom -Track Your Cycle",
+    "packageName": "dev.haltansu.bloom",
+    "version": "1.0.2",
+    "startDate": "13 June 2026",
+    "id": "WAT-16FB-2026"
+  },
   "com.rasoiai.app": {
     "key": "com.rasoiai.app",
     "appName": "Rasoi AI - AI powered Kitchen",
@@ -191,6 +263,14 @@
     "startDate": "07 June 2026",
     "id": "WAT-17FA-2026"
   },
+  "com.resumemint.app": {
+    "key": "com.resumemint.app",
+    "appName": "ResumeMint: Resume Builder",
+    "packageName": "com.resumemint.app",
+    "version": "1.2.0",
+    "startDate": "14 June 2026",
+    "id": "WAT-17FB-2026"
+  },
   "com.aceacademy.mobile": {
     "key": "com.aceacademy.mobile",
     "appName": "My Ace",
@@ -198,6 +278,14 @@
     "version": "1.0.0",
     "startDate": "08 June 2026",
     "id": "WAT-18FA-2026"
+  },
+  "com.ncosys.pdf_verse": {
+    "key": "com.ncosys.pdf_verse",
+    "appName": "PDF Verse",
+    "packageName": "com.ncosys.pdf_verse",
+    "version": "1.0.0",
+    "startDate": "14 June 2026",
+    "id": "WAT-18FB-2026"
   },
   "com.roxludo.roxludo": {
     "key": "com.roxludo.roxludo",
@@ -271,6 +359,70 @@
     "startDate": "07 June 2026",
     "id": "WAT-10FC-2026"
   },
+  "app.emergent.deliverontime16dc7948c": {
+    "key": "app.emergent.deliverontime16dc7948c",
+    "appName": "Delivery on time",
+    "packageName": "app.emergent.deliverontime16dc7948c",
+    "version": "1.0.15",
+    "startDate": "09 June 2026",
+    "id": "WAT-11FC-2026"
+  },
+  "com.company.smiledental": {
+    "key": "com.company.smiledental",
+    "appName": "Smile Dental",
+    "packageName": "com.company.smiledental",
+    "version": "1.0.0",
+    "startDate": "10 June 2026",
+    "id": "WAT-12FC-2026"
+  },
+  "com.peptometry.app": {
+    "key": "com.peptometry.app",
+    "appName": "Peptometry",
+    "packageName": "com.peptometry.app",
+    "version": "1.2.0",
+    "startDate": "11 June 2026",
+    "id": "WAT-13FC-2026"
+  },
+  "live.glowcall.app": {
+    "key": "live.glowcall.app",
+    "appName": "Zyro Call",
+    "packageName": "live.glowcall.app",
+    "version": "1.0.1",
+    "startDate": "12 June 2026",
+    "id": "WAT-14FC-2026"
+  },
+  "com.texambuddy.exam": {
+    "key": "com.texambuddy.exam",
+    "appName": "Texam Buddy",
+    "packageName": "com.texambuddy.exam",
+    "version": "1.0.2",
+    "startDate": "12 June 2026",
+    "id": "WAT-15FC-2026"
+  },
+  "com.civilcalcpro.app": {
+    "key": "com.civilcalcpro.app",
+    "appName": "Civil CalcPro",
+    "packageName": "com.civilcalcpro.app",
+    "version": "1.0.1",
+    "startDate": "13 June 2026",
+    "id": "WAT-16FC-2026"
+  },
+  "com.yavonalabs.billpatra": {
+    "key": "com.yavonalabs.billpatra",
+    "appName": "Bill Patra",
+    "packageName": "com.yavonalabs.billpatra",
+    "version": "1.0.1",
+    "startDate": "13 June 2026",
+    "id": "WAT-17FC-2026"
+  },
+  "com.dforgetech.aikiss": {
+    "key": "com.dforgetech.aikiss",
+    "appName": "Dance AI",
+    "packageName": "com.dforgetech.aikiss",
+    "version": "1.0.0",
+    "startDate": "15 June 2026",
+    "id": "WAT-18FC-2026"
+  },
   "com.mwktech.affirmations.mindfuel": {
     "key": "com.mwktech.affirmations.mindfuel",
     "appName": "Mindfuel: Daily Affirmations",
@@ -286,5 +438,69 @@
     "version": "1.0.1",
     "startDate": "",
     "id": "WAT-20FA-2026"
+  },
+  "com.innovafrique.kabadeal": {
+    "key": "com.innovafrique.kabadeal",
+    "appName": "Kabaldeal",
+    "packageName": "com.innovafrique.kabadeal",
+    "version": "1.0.0",
+    "startDate": "",
+    "id": "WAT-21FA-2026"
+  },
+  "com.paradox.liveraintrack": {
+    "key": "com.paradox.liveraintrack",
+    "appName": "PSI live Rain Track",
+    "packageName": "com.paradox.liveraintrack",
+    "version": "1.0.0",
+    "startDate": "",
+    "id": "WAT-22FA-2026"
+  },
+  "com.nike11.UnigrammApp": {
+    "key": "com.nike11.UnigrammApp",
+    "appName": "Unigramm",
+    "packageName": "com.nike11.UnigrammApp",
+    "version": "1.0.11",
+    "startDate": "",
+    "id": "WAT-23FA-2026"
+  },
+  "com.smspro.app": {
+    "key": "com.smspro.app",
+    "appName": "SG MSG",
+    "packageName": "com.smspro.app",
+    "version": "1.0.4",
+    "startDate": "12 June 2026",
+    "id": "WAT-24FA-2026"
+  },
+  "com.nallaneram360.app": {
+    "key": "com.nallaneram360.app",
+    "appName": "Nallaneram 360",
+    "packageName": "com.nallaneram360.app",
+    "version": "1.0.0",
+    "startDate": "12 June 2026",
+    "id": "WAT-25FA-2026"
+  },
+  "co.median.android.eekypon": {
+    "key": "co.median.android.eekypon",
+    "appName": "Rena 27",
+    "packageName": "co.median.android.eekypon",
+    "version": "1.0.0",
+    "startDate": "12 June 2026",
+    "id": "WAT-26FA-2026"
+  },
+  "com.jrdtk.threecolorpuzzle": {
+    "key": "com.jrdtk.threecolorpuzzle",
+    "appName": "Three Color Puzzle",
+    "packageName": "com.jrdtk.threecolorpuzzle",
+    "version": "1.0.0",
+    "startDate": "12 June 2026",
+    "id": "WAT-27FA-2026"
+  },
+  "com.pdtmentorship.app": {
+    "key": "com.pdtmentorship.app",
+    "appName": "PDT",
+    "packageName": "com.pdtmentorship.app",
+    "version": "0.1.0",
+    "startDate": "14 June 2026",
+    "id": "WAT-28FA-2026"
   }
 }
