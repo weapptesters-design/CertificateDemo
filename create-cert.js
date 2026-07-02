@@ -9,8 +9,8 @@ const BOT_TOKEN   = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID     = process.env.TELEGRAM_CHAT_ID;
 
 // Image URLs from assets.js
-const LOGO_URL = 'https://i.ibb.co/bM7b6WSn/Icon-comp.png';
-const SEAL_URL = 'https://i.ibb.co/SXRYz54d/Badge-comp.png';
+const LOGO_URL = 'https://i.postimg.cc/67qMZBJ9/Icon-comp.png';
+const SEAL_URL = 'https://i.postimg.cc/R3YXQ24Z/Badge-comp.png';
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
 const MONTHS = {
