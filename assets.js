@@ -1,4 +1,4 @@
 window.APP_ASSETS = {
-  logo: "https://i.ibb.co/bM7b6WSn/Icon-comp.png",
-  seal: "https://i.ibb.co/SXRYz54d/Badge-comp.png"
+  logo: "https://i.postimg.cc/67qMZBJ9/Icon-comp.png",
+  seal: "https://i.postimg.cc/R3YXQ24Z/Badge-comp.png"
 };
