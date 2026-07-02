@@ -207,7 +207,7 @@ html,body{
         <div style="font-size:14.5px;color:#1565c0;font-weight:700;margin-top:3px;">🌐 WeAppTesters.com</div>
       </div>
       <div style="text-align:center;">
-        <div style="font-family:'Caveat',cursive;font-weight:700;font-size:38px;color:#1a1464;margin-bottom:-10px;line-height:1;padding-bottom:5px;">Kumkum Rani</div>
+        <div style="font-family:'Caveat',cursive;font-weight:700;font-size:38px;color:#1a1464;margin-bottom:-10px;line-height:1;padding-bottom:5px;">Aaditya Kumar</div>
         <div style="width:180px;height:1.5px;background:#666;margin-bottom:6px;margin-left:auto;margin-right:auto;"></div>
         <div style="font-size:13px;color:#1a1a1a;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Testing Manager</div>
       </div>
